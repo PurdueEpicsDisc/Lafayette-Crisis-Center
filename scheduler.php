@@ -1,4 +1,4 @@
- <?php echo '<p>Hello World</p>';
+ <?php 
 $con=mysqli_connect("128.46.116.11","LCCenter","LCC.team4","lcc");
 
 // Check connection
