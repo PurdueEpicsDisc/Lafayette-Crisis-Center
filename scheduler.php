@@ -26,6 +26,7 @@ function show(){
         }
     }
 }
+
 function addUser($firstName, $lastName, $skillLevel)
 {
     $sql = "INSERT INTO USERS(['FIRST'], ['LAST'], ['SKILL LEVEL'])
