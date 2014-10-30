@@ -40,15 +40,4 @@ $link = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
         }
      }
 
-
-    function addUser($firstName, $lastName, $skillLevel)
-    {
-        global $link;
-        $sql = "INSERT INTO USERS (PRIMARY_ID, FIRST, LAST, SKILL_LEVEL) VALUES (NULL, '$firstName', '$lastName', '$skillLevel')";
-        if($stmt = $link->prepare($sql)){
-            $stmt->execute();
-            $stmt->close();
-        }
-    }
-    addUser('slardy ', 'blardfest', '2');
-?>
+?>  
