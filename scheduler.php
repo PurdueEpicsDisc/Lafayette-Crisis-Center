@@ -3,9 +3,11 @@ $link = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
 if (!$link) {
     die("Connection failed: " . $mysqli->error());
 }
-    /**$users init to size of shifts **/
+    /**$users init to size of shifts change 42 **/
     $users = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     $priorities= array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    $usersNames = array("", "", "", "", "", "", "", "", "", "", "", "", "");
+
     // Open a MySQL connection
     $sql = "SELECT * FROM SHIFTS ";
     if($stmt = $link->prepare($sql)){
@@ -27,12 +29,20 @@ if (!$link) {
                     $stmt->execute();
                     $stmt->bind_result($first, $last);
                     while($stmt->fetch()) {
-                        $users[$i] = $last.", ".$first;
+                        $usersNames[$i] = $last.", ".$first;
                     }
                         $stmt->close();
                 }
-                //echo("User: $users[$i]\n");
+
             }
+        }
+
+        for($i = 0; $i < 13; $i++) {
+            echo("--------------\n");
+            echo($usersNames[$i]);
+            echo("\n");
+            echo("--------------\n");
+
         }
         echo("Done\n");
 
