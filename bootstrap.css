@@ -1208,8 +1208,8 @@ a.bg-danger:hover {
   background-color: #e4b9b9;
 }
 .page-header {
-  padding-bottom: 9.5px;
-  margin: 42px 0 21px;
+  padding-bottom: 6.5px;
+  margin: 22px 0 11px;
   border-bottom: 1px solid #dddddd;
 }
 ul,
@@ -2058,7 +2058,7 @@ th {
 .table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: 21px;
+  margin-bottom: 5px;
 }
 .table > thead > tr > th,
 .table > tbody > tr > th,
@@ -2239,7 +2239,7 @@ table th[class*="col-"] {
 @media screen and (max-width: 767px) {
   .table-responsive {
     width: 100%;
-    margin-bottom: 15.75px;
+    margin-bottom: 10px;
     overflow-y: hidden;
     overflow-x: auto;
     -ms-overflow-style: -ms-autohiding-scrollbar;
@@ -2344,10 +2344,11 @@ output {
 }
 .form-control {
   display: block;
-  width: 100%;
-  height: 39px;
-  padding: 8px 12px;
-  font-size: 15px;
+    align-content: inherit;
+  width: 40%;
+  height: 29px;
+  padding: 5px 9px;
+  font-size: 12px;
   line-height: 1.4;
   color: #6f6f6f;
   background-color: #ffffff;
@@ -2491,8 +2492,8 @@ fieldset[disabled] .checkbox label {
   border-radius: 0;
 }
 select.input-sm {
-  height: 36px;
-  line-height: 36px;
+  height: 16px;
+  line-height: 16px;
 }
 textarea.input-sm,
 select[multiple].input-sm {
@@ -2507,8 +2508,8 @@ select[multiple].input-sm {
   border-radius: 0;
 }
 select.input-lg {
-  height: 60px;
-  line-height: 60px;
+  height: 30px;
+  line-height: 30px;
 }
 textarea.input-lg,
 select[multiple].input-lg {
@@ -2627,6 +2628,12 @@ select[multiple].input-lg {
   margin-top: 5px;
   margin-bottom: 10px;
   color: #626262;
+}
+
+.name{
+    font-size: large;
+    text-decoration: solid;
+    margin-left: 20px;
 }
 @media (min-width: 768px) {
   .form-inline .form-group {
@@ -3425,7 +3432,7 @@ tbody.collapse.in {
   position: relative;
   z-index: 2;
   float: left;
-  width: 100%;
+  width: 50%;
   margin-bottom: 0;
 }
 .input-group-lg > .form-control,
@@ -3440,8 +3447,8 @@ tbody.collapse.in {
 select.input-group-lg > .form-control,
 select.input-group-lg > .input-group-addon,
 select.input-group-lg > .input-group-btn > .btn {
-  height: 60px;
-  line-height: 60px;
+  height: 30px;
+  line-height: 30px;
 }
 textarea.input-group-lg > .form-control,
 textarea.input-group-lg > .input-group-addon,
@@ -3454,17 +3461,17 @@ select[multiple].input-group-lg > .input-group-btn > .btn {
 .input-group-sm > .form-control,
 .input-group-sm > .input-group-addon,
 .input-group-sm > .input-group-btn > .btn {
-  height: 36px;
-  padding: 8px 12px;
-  font-size: 12px;
+  height: 26px;
+  padding: 5px 9px;
+  font-size: 10px;
   line-height: 1.5;
   border-radius: 0;
 }
 select.input-group-sm > .form-control,
 select.input-group-sm > .input-group-addon,
 select.input-group-sm > .input-group-btn > .btn {
-  height: 36px;
-  line-height: 36px;
+  height: 12px;
+  line-height: 12px;
 }
 textarea.input-group-sm > .form-control,
 textarea.input-group-sm > .input-group-addon,
@@ -3695,6 +3702,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .nav-stacked > li {
   float: none;
+}
+.page_changer{
+    float: right;
+    margin: 15px;
+}
+.page_changer > li{
+    display: inline;
 }
 .nav-stacked > li + li {
   margin-top: 2px;
@@ -4276,36 +4290,19 @@ fieldset[disabled] .navbar-inverse .btn-link:hover,
 fieldset[disabled] .navbar-inverse .btn-link:focus {
   color: #444444;
 }
-.breadcrumb {
-  padding: 8px 15px;
-  margin-bottom: 21px;
-  list-style: none;
-  background-color: #f5f5f5;
-  border-radius: 0;
-}
-.breadcrumb > li {
-  display: inline-block;
-}
-.breadcrumb > li + li:before {
-  content: "/\00a0";
-  padding: 0 5px;
-  color: #999999;
-}
-.breadcrumb > .active {
-  color: #333333;
-}
+
+
 .pagination {
-  display: inline-block;
   padding-left: 0;
-  margin: 21px 0;
+  margin: 5px 0;
   border-radius: 0;
+  float: right;
 }
 .pagination > li {
   display: inline;
 }
 .pagination > li > a,
 .pagination > li > span {
-  position: relative;
   float: left;
   padding: 8px 12px;
   line-height: 1.4;
@@ -4334,44 +4331,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   background-color: #eeeeee;
   border-color: transparent;
 }
-.pagination > .active > a,
-.pagination > .active > span,
-.pagination > .active > a:hover,
-.pagination > .active > span:hover,
-.pagination > .active > a:focus,
-.pagination > .active > span:focus {
-  z-index: 2;
-  color: #ffffff;
-  background-color: #008cba;
-  border-color: transparent;
-  cursor: default;
-}
-.pagination > .disabled > span,
-.pagination > .disabled > span:hover,
-.pagination > .disabled > span:focus,
-.pagination > .disabled > a,
-.pagination > .disabled > a:hover,
-.pagination > .disabled > a:focus {
-  color: #999999;
-  background-color: #ffffff;
-  border-color: transparent;
-  cursor: not-allowed;
-}
-.pagination-lg > li > a,
-.pagination-lg > li > span {
-  padding: 16px 20px;
-  font-size: 19px;
-}
-.pagination-lg > li:first-child > a,
-.pagination-lg > li:first-child > span {
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-}
-.pagination-lg > li:last-child > a,
-.pagination-lg > li:last-child > span {
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
+
 .pagination-sm > li > a,
 .pagination-sm > li > span {
   padding: 8px 12px;
@@ -4387,44 +4347,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
 }
-.pager {
-  padding-left: 0;
-  margin: 21px 0;
-  list-style: none;
-  text-align: center;
-}
-.pager li {
-  display: inline;
-}
-.pager li > a,
-.pager li > span {
-  display: inline-block;
-  padding: 5px 14px;
-  background-color: transparent;
-  border: 1px solid transparent;
-  border-radius: 3px;
-}
-.pager li > a:hover,
-.pager li > a:focus {
-  text-decoration: none;
-  background-color: #eeeeee;
-}
-.pager .next > a,
-.pager .next > span {
-  float: right;
-}
-.pager .previous > a,
-.pager .previous > span {
-  float: left;
-}
-.pager .disabled > a,
-.pager .disabled > a:hover,
-.pager .disabled > a:focus,
-.pager .disabled > span {
-  color: #999999;
-  background-color: transparent;
-  cursor: not-allowed;
-}
+
 .label {
   display: inline;
   padding: .2em .6em .3em;
@@ -5963,6 +5886,10 @@ button.close {
 }
 @-ms-viewport {
   width: device-width;
+}
+#archive{
+    float: right;
+    text-align: right;
 }
 .visible-xs,
 .visible-sm,
