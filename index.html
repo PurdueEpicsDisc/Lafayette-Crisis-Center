@@ -270,14 +270,16 @@
                     <script>
                         var count = 1;
                         function increment() {
-                            document.getElementById("week").innerHTML = ++count;
+                            ++count;
                             if(count > 4)
-                            count = 1;
+                                count = 1;
+                            document.getElementById("week").innerHTML = count;
                         }
                         function decrement() {
-                            document.getElementById("week").innerHTML = --count;
+                            --count;
                             if(count < 1)
-                            count = 4;
+                                count = 4;
+                            document.getElementById("week").innerHTML = count;
                         }
                     </script>
                 </div>
