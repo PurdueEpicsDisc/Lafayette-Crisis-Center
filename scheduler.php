@@ -90,57 +90,57 @@
                     </thead>
                     <tbody>
                     <?php
-						$link = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
-						if (!$link) {
-    						die("Connection failed: " . $mysqli->error());
-						}
-						/**$users init to size of shifts change 42 **/
-						$users = new SplFixedArray(42);
-						$priorities= new SplFixedArray(42);
-						$usersNames = new SplFixedArray(42);
-						$weekDays = array("Monday", "Tuesday", "Wednesday" , "Thursday" , "Friday" , "Saturday" , "Sunday");
+                        $link = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
+                        if (!$link) {
+                            die("Connection failed: " . $mysqli->error());
+                        }
+                        /**$users init to size of shifts change 42 **/
+                        $users = new SplFixedArray(42);
+                        $priorities= new SplFixedArray(42);
+                        $usersNames = new SplFixedArray(42);
+                        $weekDays = array("Monday", "Tuesday", "Wednesday" , "Thursday" , "Friday" , "Saturday" , "Sunday");
 
-						// Open a MySQL connection
-						$sql = "SELECT * FROM SHIFTS ";
-						if($stmt = $link->prepare($sql)){
-    						$stmt->execute();
-  							$stmt->bind_result($id, $userID, $shiftID , $priority);
-    					while($stmt->fetch()) {
-        					if($priority > $priorities[$shiftID]){
-           						$users[$shiftID] = $userID;
-           						$priorities[$shiftID] = $priority;
-        					}
-    					}
-    					$stmt->close();
+                        // Open a MySQL connection
+                        $sql = "SELECT * FROM SHIFTS ";
+                        if($stmt = $link->prepare($sql)){
+                            $stmt->execute();
+                            $stmt->bind_result($id, $userID, $shiftID , $priority);
+                        while($stmt->fetch()) {
+                            if($priority > $priorities[$shiftID]){
+                                $users[$shiftID] = $userID;
+                                $priorities[$shiftID] = $priority;
+                            }
+                        }
+                        $stmt->close();
 
-    					/* Convert userID -> Last, First */
-    					for($i = 0; $i < 42; $i++) {
-        					if($users[$i] != 0 && $priorities[$i] != 0) {
-            					$sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=$users[$i]";
-            					if($stmt = $link->prepare($sql)) {
-                					$stmt->execute();
-                					$stmt->bind_result($first, $last);
-                				while($stmt->fetch()) {
-                    				$usersNames[$i] = $last.", ".$first;
-                				}
-                				$stmt->close();
-           						}
-        					}
-    					}
+                        /* Convert userID -> Last, First */
+                        for($i = 0; $i < 42; $i++) {
+                            if($users[$i] != 0 && $priorities[$i] != 0) {
+                                $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=$users[$i]";
+                                if($stmt = $link->prepare($sql)) {
+                                    $stmt->execute();
+                                    $stmt->bind_result($first, $last);
+                                while($stmt->fetch()) {
+                                    $usersNames[$i] = $last.", ".$first;
+                                }
+                                $stmt->close();
+                                }
+                            }
+                        }
 
-        				for ($i = 0; $i < 7; $i++) {
-    						echo "<tr><td>$weekDays[$i]</td>";
-    							for ($j = 0; $j < 6; $j++) {
-    								$idx = ($i * 6) + $j;
-    								echo "<td><p>$idx is $usersNames[$idx]</p></td>";
-								}
-                 				echo"</tr>";
-    						}
-						}
+                        for ($i = 0; $i < 7; $i++) {
+                            echo "<tr><td>$weekDays[$i]</td>";
+                                for ($j = 0; $j < 6; $j++) {
+                                    $idx = ($i * 6) + $j;
+                                    echo "<td><p>$usersNames[$idx]</p></td>";
+                                }
+                                echo"</tr>";
+                            }
+                        }
 
-					?>
+                    ?>
                     
-                 	</tbody>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -283,4 +283,3 @@
 <script src="./js/bootswatch.js"></script>
 </body>
 </html>
-
