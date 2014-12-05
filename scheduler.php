@@ -234,7 +234,6 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>
@@ -257,7 +256,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -279,6 +277,22 @@
 
 
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('td').click(
+            function() {
+                var $p = $(this).text();
+                $('.modal').show();
+                $('.modal-title').text($p);
+            }
+        );
+        $('button').click(
+            function(){
+                $('.modal').hide();
+            });
+    });
+
+</script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/bootswatch.js"></script>
 </body>
