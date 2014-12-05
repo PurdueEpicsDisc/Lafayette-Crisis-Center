@@ -229,6 +229,7 @@
                                 <h4 class="modal-title">Name</h4>
                             </div>
                             <div class="modal-body">
+                                <p>Skill Level:</p>
                                 <p>Telephone:</p>
                                 <p>E-mail:</p>
                             </div>
@@ -251,6 +252,7 @@
                 <h4 class="modal-title">Name</h4>
             </div>
             <div class="modal-body">
+                <p>Skill Level:</p>
                 <p>Telephone:</p>
                 <p>E-mail:</p>
             </div>
