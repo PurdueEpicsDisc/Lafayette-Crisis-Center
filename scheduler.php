@@ -190,9 +190,9 @@
     <div class="col-lg-6">
 
         <p class="bs-component">
-            <a href="#" class="btn btn-success">Add new Volunteer</a>
-            <a href="#" class="btn btn-warning">Edit Volunteer</a>
-            <a href="#" class="btn btn-danger">Remove Volunteer</a>
+            <a href="addShift.html" class="btn btn-success">Add new Shifts</a>
+            <a href="editShift.html" class="btn btn-warning">Edit Shifts</a>
+            <a href="removeShift.html" class="btn btn-danger">Remove Shifts</a>
         </p>
 
 
@@ -203,11 +203,9 @@
                     <a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
                     <ul class="dropdown-menu">
 
-                    <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
+                    <li><a href="#">Add Volunteer</a></li>
+                        <li><a href="#">Edit Volunteer</a></li>
+                        <li><a href="#">Remove Volunteer</a></li>
                     </ul>
                 </div>
             </div>
