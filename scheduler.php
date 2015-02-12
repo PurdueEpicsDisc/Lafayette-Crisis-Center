@@ -98,14 +98,45 @@
                         $users = new SplFixedArray(42);
                         $priorities= new SplFixedArray(42);
                         $usersNames = new SplFixedArray(42);
-                        $weekDays = array("Monday", "Tuesday", "Wednesday" , "Thursday" , "Friday" , "Saturday" , "Sunday");
+
+                        $users_High = new SplQueue();
+                        $users_Med = new SplQueue();
+                        $users_Low = new SplQueue();
+                        $users_Trainee = new SplQueue();
+                        $users_Trainer = new SplQueue();
+
+
+                    $weekDays = array("Monday", "Tuesday", "Wednesday" , "Thursday" , "Friday" , "Saturday" , "Sunday");
 
                         // Open a MySQL connection
                         $sql = "SELECT * FROM SHIFTS ";
                         if($stmt = $link->prepare($sql)){
                             $stmt->execute();
-                            $stmt->bind_result($id, $userID, $shiftID , $priority);
+                            $stmt->bind_result($id, $userID, $shiftID , $priority, $skill_level);
                         while($stmt->fetch()) {
+                            if($skill_level == 2) {
+                                $users_Trainer->enqueue($id);
+                            }
+                            if($skill_level == 0){
+                                $users_Trainee->enqueue($id);
+
+                            }
+                            switch($priority) {
+
+                                case 1:
+                                    $users_Low->enqueue($id);
+                                    break;
+
+                                case 2:
+                                    $users_Med->enqueue($id);
+                                    break;
+
+                                case 3:
+                                    $users_High->enqueue($id);
+                                    break;
+
+                            }
+
                             if($priority > $priorities[$shiftID]){
                                 $users[$shiftID] = $userID;
                                 $priorities[$shiftID] = $priority;
@@ -113,18 +144,34 @@
                         }
                         $stmt->close();
 
-                        /* Convert userID -> Last, First */
-                        for($i = 0; $i < 42; $i++) {
-                            if($users[$i] != 0 && $priorities[$i] != 0) {
-                                $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=$users[$i]";
+
+
+
+
+
+
+
+                        /* Convert userID -> Last, First*/
+                        for($i = 0; $i < 3; $i++) {
+                                $ids = $users_High->dequeue();
+                                $hold = "SELECT UserID, ShiftID FROM SHIFTS WHERE PRIMARY_ID=$ids";
+                                if($stmt = $link->prepare($hold)){
+                                $stmt->execute();
+                                $stmt->bind_result($user_ID, $shift_ID);
+                                $stmt->fetch();
+                            }
+                                $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=$user_ID";
+
+                            $stmt->close();
                                 if($stmt = $link->prepare($sql)) {
                                     $stmt->execute();
                                     $stmt->bind_result($first, $last);
-                                while($stmt->fetch()) {
-                                    $usersNames[$i] = $last.", ".$first;
-                                }
+                                $stmt->fetch();
+                                    echo $last;
+                                    $usersNames[$shift_ID] = $last.", ".$first;
+
                                 $stmt->close();
-                                }
+
                             }
                         }
 
@@ -159,10 +206,10 @@
     <div class="col-lg-4">
         <div class="page_changer">
             <ul class="pagination pagination-sm">
-                <li><a href="#" onclick="decrement()">&laquo;</a></li>
-                <li><a href="#" onclick="decrement()">Prev</a></li>
-                <li><a href="#" onclick="increment()">Next</a></li>
-                <li><a href="#" onclick="increment()">&raquo;</a></li>
+                <li><button type ="button" onclick="decrement()">&laquo;</button></li>
+                <li><button type ="button" onclick="decrement()">Prev</button></li>
+                <li><button type ="button" onclick="increment()">Next</button></li>
+                <li><button type ="button" onclick="increment()">&raquo;</button></li>
             </ul>
             <script>
                 var count = 1;
@@ -170,13 +217,13 @@
                     ++count;
                     if(count > 4)
                         count = 1;
-                    document.getElementById("week").innerHTML = count;
+                    document.getElementById("week").innerHTML = 7*count;
                 }
                 function decrement() {
                     --count;
                     if(count < 1)
                         count = 4;
-                    document.getElementById("week").innerHTML = count;
+                    document.getElementById("week").innerHTML = 7*count;
                 }
             </script>
         </div>

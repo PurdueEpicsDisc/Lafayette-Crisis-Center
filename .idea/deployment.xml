@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="LCC">
+    <serverData>
+      <paths name="LCC">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="Lafayette-Crisis-Center" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="LCC (1)">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="Lafayette-Crisis-Center" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
