@@ -50,7 +50,7 @@
                 <h1 id="tables">Schedule for <span id="pmonth">PMonth</span>
                     <script type="text/javascript">
 
-                        var my_month=new Date();
+                        var my_month= new Date();
                         var month_name=new Array(12);
                         month_name[0]="January";
                         month_name[1]="February";
@@ -78,65 +78,98 @@
                 <table class="table table-striped table-hover ">
                     <thead>
                     <tr>
-                        <th style="font-size: 25px">Week <span id="week" style="font-size: 28px">1</span></th>
+                        <!--
+                        <th style="font-size: 25px">Week of the<span id="week" style="font-size: 28px">1st</span></th>
                         <th>12 am - 4 am</th>
                         <th>4 am - 8 am</th>
                         <th>8 am - 12 pm</th>
                         <th>12 pm - 4 pm</th>
                         <th>4 pm - 8 pm</th>
                         <th>8 pm - 12 am</th>
+                        -->
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tues</th>
+                        <th>Wed</th>
+                        <th>Thur</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
 
                     </tr>
                     </thead>
                     <tbody>
+                    <script type="text/javascript">
+                        function returnArray() {
+                            var day = new Date();
+                            var month = day.getMonth()+1;
+                            var year = day.getFullYear();
+                            var startDay = new Date(year,month-1,1).getDay();
+                            return startDay;
+                        }
+                    </script>
                     <?php
+                        /*
+                         * All of this needs to be replaced with a new fetching algorithm
+                         */
                         $link = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
                         if (!$link) {
                             die("Connection failed: " . $mysqli->error());
                         }
-                        /**$users init to size of shifts change 42 **/
+                        /**$users init to number of shifts, 42 is a placeholder value **/
                         $users = new SplFixedArray(42);
                         $priorities= new SplFixedArray(42);
                         $usersNames = new SplFixedArray(42);
-                        $weekDays = array("Monday", "Tuesday", "Wednesday" , "Thursday" , "Friday" , "Saturday" , "Sunday");
+                        $weekDays = array();
+                    echo date("D, M j, Y", strtotime("FIRST DAY OF MAY 2012"))
+                        for ($i = 0; $i <= 31; $i++) {
+                            echo "<tr><td></td>";
+                            for ($j = 0; $j < 7; $j++) {
+                                $idx = ($i * 6) + $j;
+                                echo "<td><p>$usersNames[$idx]</p></td>";
+                            }
+                            echo"</tr>";
+                        }
 
                         // Open a MySQL connection
+                        /*
                         $sql = "SELECT * FROM SHIFTS ";
-                        if($stmt = $link->prepare($sql)){
+                        if($stmt = $link->prepare($sql)) {
                             $stmt->execute();
-                            $stmt->bind_result($id, $userID, $shiftID , $priority);
-                        while($stmt->fetch()) {
-                            if($priority > $priorities[$shiftID]){
-                                $users[$shiftID] = $userID;
-                                $priorities[$shiftID] = $priority;
+                            $stmt->bind_result($id, $userID, $shiftID, $priority);
+                            while ($stmt->fetch()) {
+                                if ($priority > $priorities[$shiftID]) {
+                                    $users[$shiftID] = $userID;
+                                    $priorities[$shiftID] = $priority;
+                                }
                             }
-                        }
-                        $stmt->close();
+                            $stmt->close();
+                         */
+                            /* Convert userID -> Last, First */
+                            /*
+                                for($i = 0; $i < 56; $i++) {
+                                if($users[$i] != 0 && $priorities[$i] != 0) {
+                                    $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=$users[$i]";
+                                    if($stmt = $link->prepare($sql)) {
+                                        $stmt->execute();
+                                        $stmt->bind_result($first, $last);
+                                    while($stmt->fetch()) {
+                                        $usersNames[$i] = $last.", ".$first;
+                                    }
+                                    $stmt->close();
+                                    }
+                                }
+                            }
 
-                        /* Convert userID -> Last, First */
-                        for($i = 0; $i < 42; $i++) {
-                            if($users[$i] != 0 && $priorities[$i] != 0) {
-                                $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=$users[$i]";
-                                if($stmt = $link->prepare($sql)) {
-                                    $stmt->execute();
-                                    $stmt->bind_result($first, $last);
-                                while($stmt->fetch()) {
-                                    $usersNames[$i] = $last.", ".$first;
-                                }
-                                $stmt->close();
+                            for ($i = 0; $i < 7; $i++) {
+                                echo "<tr><td>$weekDays[$i]</td>";
+                                    for ($j = 0; $j < 6; $j++) {
+                                        $idx = ($i * 6) + $j;
+                                        echo "<td><p>$usersNames[$idx]</p></td>";
+                                    }
+                                    echo"</tr>";
                                 }
                             }
-                        }
-
-                        for ($i = 0; $i < 7; $i++) {
-                            echo "<tr><td>$weekDays[$i]</td>";
-                                for ($j = 0; $j < 6; $j++) {
-                                    $idx = ($i * 6) + $j;
-                                    echo "<td><p>$usersNames[$idx]</p></td>";
-                                }
-                                echo"</tr>";
-                            }
-                        }
+                            */
 
                     ?>
                     
@@ -159,24 +192,19 @@
     <div class="col-lg-4">
         <div class="page_changer">
             <ul class="pagination pagination-sm">
-                <li><a href="#" onclick="decrement()">&laquo;</a></li>
-                <li><a href="#" onclick="decrement()">Prev</a></li>
-                <li><a href="#" onclick="increment()">Next</a></li>
-                <li><a href="#" onclick="increment()">&raquo;</a></li>
+                <!--<li><a href="#" onclick="decrement()">&laquo;</a></li>-->
+                <li><button button id="prev" onclick="decrement()">Prev</button></li>
+                <li><button button id="next" onclick="increment()">Next</button></li>
+                <!--<li><a href="#" onclick="increment()">&raquo;</a></li>-->
             </ul>
             <script>
                 var count = 1;
+                var currentday = 1;
                 function increment() {
-                    ++count;
-                    if(count > 4)
-                        count = 1;
-                    document.getElementById("week").innerHTML = count;
+
                 }
                 function decrement() {
-                    --count;
-                    if(count < 1)
-                        count = 4;
-                    document.getElementById("week").innerHTML = count;
+
                 }
             </script>
         </div>
