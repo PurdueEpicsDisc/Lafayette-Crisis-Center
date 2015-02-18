@@ -99,6 +99,70 @@
                         $priorities= new SplFixedArray(42);
                         $usersNames = new SplFixedArray(42);
 
+
+
+                        class User {
+                            private $id;
+                            private $userID;
+                            private $shiftID;
+                            private $priority;
+                            private $scheduled;
+                            private $last_name;
+                            private $first_name;
+
+                        public function __construct($userID, $shiftID, $priority)  {
+                            $this->userID = $userID;
+                            $this->shiftID = $shiftID;
+                            $this->priority = $priority;
+                            $this->scheduled = false;
+
+
+                        }
+                            public function set_name($first, $last){
+                                $this->first_name = $first;
+                                $this->last_name = $last;
+                            }
+                            public function get_id(){
+                                return $this->id;
+                            }
+                            public function get_shiftID(){
+                                return $this->shiftID;
+                            }
+                            public function get_priority(){
+                                return $this->priority;
+                            }
+                            public function schedule(){
+                                $scheduled = true;
+                            }
+                            public function isScheduled(){
+                                return $this->scheduled;
+                            }
+
+                            public function get_last_name(){
+                                return $this->last_name;
+                            }
+
+                            public function get_fist_name(){
+                                return $this->first_name;
+                            }
+                            public function get_userID(){
+                                return $this->userID;
+                            }
+                            public function get_name(){
+                                return "$this->last_name".", "."$this->first_name";
+                            }
+
+
+                        }
+
+                        function new_user($id, $shiftID, $priority){
+                            return new User($id, $shiftID, $priority);
+                        }
+
+                        $TRAINER = 2;
+                        $TRAINEE = 0;
+
+
                         $users_High = new SplQueue();
                         $users_Med = new SplQueue();
                         $users_Low = new SplQueue();
@@ -109,49 +173,104 @@
                     $weekDays = array("Monday", "Tuesday", "Wednesday" , "Thursday" , "Friday" , "Saturday" , "Sunday");
 
                         // Open a MySQL connection
+
                         $sql = "SELECT * FROM SHIFTS ";
+
                         if($stmt = $link->prepare($sql)){
                             $stmt->execute();
                             $stmt->bind_result($id, $userID, $shiftID , $priority, $skill_level);
+
+
+
+
+
+                        /*
+                         * Parses the SHIFTS database and sorts into 5 queues
+                         * Trainer, Trainee, Low, Med, High
+                         */
+
                         while($stmt->fetch()) {
-                            if($skill_level == 2) {
-                                $users_Trainer->enqueue($id);
+
+
+                            if($skill_level == $TRAINER) {
+
+                                $users_Trainer->enqueue(new_user($userID, $shiftID, $priority));
                             }
-                            if($skill_level == 0){
-                                $users_Trainee->enqueue($id);
+                            if($skill_level == $TRAINEE){
+                                $users_Trainee->enqueue(new_user($userID, $shiftID, $priority));
 
                             }
                             switch($priority) {
 
                                 case 1:
-                                    $users_Low->enqueue($id);
+                                    $users_Low->enqueue(new_user($userID, $shiftID, $priority));
                                     break;
 
                                 case 2:
-                                    $users_Med->enqueue($id);
+                                    $users_Med->enqueue(new_user($userID, $shiftID, $priority));
                                     break;
 
                                 case 3:
-                                    $users_High->enqueue($id);
+                                    $users_High->enqueue(new_user($userID, $shiftID, $priority));
                                     break;
 
                             }
 
-                            if($priority > $priorities[$shiftID]){
-                                $users[$shiftID] = $userID;
-                                $priorities[$shiftID] = $priority;
-                            }
                         }
                         $stmt->close();
 
 
+                            /*
+                             * Lets play the name game....
+                             */
+
+                            $sql = "SELECT FIRST,LAST FROM USERS WHERE SKILL_LEVEL=?";
+                            if($stmt = $link->prepare($sql)){
+
+                                $stmt->bind_param('i', $trainee = $users_Trainee->dequeue()->get_userID);
+                                $stmt->execute();
+                                $stmt->bind_result($first, $last);
+                                while($stmt->fetch()) {
+                                    printf("Volunteer: %s %s<br />", $first, $last);
+                                }
+                                $stmt->close();
+                            }
+
+
+
+                            /*
+                             * Method to first find trainer-trainee pairs and schedule them together.
+                             *
+                             */
+
+
+                            $nTrainers = $users_Trainer->count();
+                            $kTrainees = $users_Trainee->count();
 
 
 
 
 
+                            /*
+                            for ($i = 0; $i < $nTrainers; $i++) {
+                                $trainer = $users_Trainer->dequeue();
 
-                        /* Convert userID -> Last, First*/
+                                for ($j = 0; $j < $kTrainees; $j++) {
+                                      $trainee = $users_Trainee->dequeue();
+                                    if($trainer->get_shiftID() == $trainee->get_shiftID() && $trainee->isScheduled() == false) {
+                                        $usersNames[$trainer->get_shiftID()] = nl2br($trainer->get_name()." & \n".$trainee->get_name());
+                                    }
+                                    $users_Trainee->enqueue($trainee);
+                                }
+                            }
+
+                            */
+
+                                //echo $usersNames[0]->get_userID();
+
+
+
+                        /* Convert userID -> Last, First
                         for($i = 0; $i < 3; $i++) {
                                 $ids = $users_High->dequeue();
                                 $hold = "SELECT UserID, ShiftID FROM SHIFTS WHERE PRIMARY_ID=$ids";
@@ -174,6 +293,7 @@
 
                             }
                         }
+                            */
 
                         for ($i = 0; $i < 7; $i++) {
                             echo "<tr><td>$weekDays[$i]</td>";
