@@ -47,7 +47,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="page-header">
-                <h1 id="tables">Schedule for <span id="pmonth">PMonth</span>
+                <h1 id="tables">Schedule for <span id="pmonth">February</span>
                     <script type="text/javascript">
 
                         var my_month= new Date();
@@ -161,51 +161,24 @@
                             return startDay;
                         }
                     </script>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
                     <?php
-                        /*
-                         * All of this needs to be replaced with a new fetching algorithm
-                         */
                         $link = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
                         if (!$link) {
                             die("Connection failed: " . $mysqli->error());
                         }
-                        /**$users init to number of shifts, 42 is a placeholder value **/
+                        /**$users init to size of shifts change 42 **/
                         $users = new SplFixedArray(42);
                         $priorities= new SplFixedArray(42);
                         $usersNames = new SplFixedArray(42);
-                        $weekDays = array();
 
-
-                        // Open a MySQL connection
-                        /*
-                        $sql = "SELECT * FROM SHIFTS ";
-                        if($stmt = $link->prepare($sql)) {
-                            $stmt->execute();
-                            $stmt->bind_result($id, $userID, $shiftID, $priority);
-                            while ($stmt->fetch()) {
-                                if ($priority > $priorities[$shiftID]) {
-                                    $users[$shiftID] = $userID;
-                                    $priorities[$shiftID] = $priority;
-                                }
-                            }
-                            $stmt->close();
-                         */
-                            /* Convert userID -> Last, First */
-                            /*
-                                for($i = 0; $i < 56; $i++) {
-                                if($users[$i] != 0 && $priorities[$i] != 0) {
-                                    $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=$users[$i]";
-                                    if($stmt = $link->prepare($sql)) {
-                                        $stmt->execute();
-                                        $stmt->bind_result($first, $last);
-                                    while($stmt->fetch()) {
-                                        $usersNames[$i] = $last.", ".$first;
-                                    }
-                                    $stmt->close();
-                                    }
-                                }
-                            }
-
+                        $SHIFTS_PER_DAY = 5;
+                        $DAYS = 31;
 
 
 
@@ -217,13 +190,14 @@
                             private $scheduled;
                             private $last_name;
                             private $first_name;
+                            private $named;
 
                         public function __construct($userID, $shiftID, $priority)  {
                             $this->userID = $userID;
                             $this->shiftID = $shiftID;
                             $this->priority = $priority;
                             $this->scheduled = false;
-
+                            $this->named = false;
 
                         }
                             public function set_name($first, $last){
@@ -245,6 +219,11 @@
                             public function isScheduled(){
                                 return $this->scheduled;
                             }
+                            public function named(){
+                                $this->named = true;
+                            }
+
+
 
                             public function get_last_name(){
                                 return $this->last_name;
@@ -296,7 +275,7 @@
                          * Parses the SHIFTS database and sorts into 5 queues
                          * Trainer, Trainee, Low, Med, High
                          */
-                        /*
+
                         while($stmt->fetch()) {
 
 
@@ -308,6 +287,7 @@
                                 $users_Trainee->enqueue(new_user($userID, $shiftID, $priority));
 
                             }
+
                             switch($priority) {
 
                                 case 1:
@@ -326,24 +306,220 @@
 
                         }
                         $stmt->close();
-                        */
 
-                            /*
-                             * Lets play the name game....
-                             */
-                            /*
-                            $sql = "SELECT FIRST,LAST FROM USERS WHERE SKILL_LEVEL=?";
+                            $array = array();
+
+                            $kTrainees = $users_Trainee->count();
+                          //  printf("%d\n", $kTrainees);
+                           for ($j = 0; $j < $kTrainees; $j++) {
+                                    $trainee = $users_Trainee->dequeue();
+                                    array_push($array, $trainee->get_userID());
+                                    $users_Trainee->enqueue($trainee);
+                                    //printf("%d\n",$array[$j]);
+
+                           }
+
+                        /*
+                         * Lets play the name game....
+                         */
+                            //Trainiee name assigner
+
+                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
                             if($stmt = $link->prepare($sql)){
 
-                                $stmt->bind_param('i', $trainee = $users_Trainee->dequeue()->get_userID);
-                                $stmt->execute();
-                                $stmt->bind_result($first, $last);
-                                while($stmt->fetch()) {
-                                    printf("Volunteer: %s %s<br />", $first, $last);
+
+
+                           //     printf("%d\n", $kTrainees);
+                                for ($i = 0; $i < $kTrainees; $i++) {
+                                    $stmt->bind_param('i', $array[$i]);
+                                    $stmt->execute();
+                                    $stmt->bind_result($first, $last);
+                                    $stmt->fetch();
+                                    $trainee = $users_Trainee->dequeue();
+                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
+
+                                    if($trainee->named())
+                                        $users_Trainee->enqueue($trainee);
+                                    else {
+                                        $trainee->set_name($first, $last);
+                                        $users_Trainee->enqueue($trainee);
+                                        }
+
                                 }
                                 $stmt->close();
                             }
-                            */
+
+
+
+
+                            //TRIANERR!!!!!!!!!!!!!!!
+
+
+                            $array = array();
+
+                            $kTrainers = $users_Trainer->count();
+                           // printf("%d\n", $kTrainers);
+                            for ($j = 0; $j < $kTrainers; $j++) {
+                                $trainer = $users_Trainer->dequeue();
+                                array_push($array, $trainer->get_userID());
+                                $users_Trainer->enqueue($trainer);
+                                //printf("%d\n",$array[$j]);
+
+                            }
+
+
+
+
+
+
+
+                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
+                            if($stmt = $link->prepare($sql)){
+
+
+
+                             //   printf("%d\n", $kTrainers);
+                                for ($i = 0; $i < $kTrainers; $i++) {
+                                    $stmt->bind_param('i', $array[$i]);
+                                    $stmt->execute();
+                                    $stmt->bind_result($first, $last);
+                                    $stmt->fetch();
+                                    $trainer = $users_Trainer->dequeue();
+                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
+
+                                    if($trainer->named())
+                                        $users_Trainer->enqueue($trainer);
+                                    else {
+                                        $trainer->set_name($first, $last);
+                                        $users_Trainer->enqueue($trainer);
+                                    }
+
+                                }
+                                $stmt->close();
+                            }
+
+                            //LOW PRIOR USERS!!!!!!!!!!!!!!!!
+                            $array = array();
+
+                            $kLow = $users_Low->count();
+                           // printf("%d\n", $kLow);
+                            for ($j = 0; $j < $kLow; $j++) {
+                                $trainee = $users_Low->dequeue();
+                                array_push($array, $trainee->get_userID());
+                                $users_Low->enqueue($trainee);
+                                //printf("%d\n",$array[$j]);
+
+                            }
+
+
+
+
+
+                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
+                            if($stmt = $link->prepare($sql)){
+
+
+
+                                //printf("%d\n", $kLow);
+                                for ($i = 0; $i < $kLow; $i++) {
+                                    $stmt->bind_param('i', $array[$i]);
+                                    $stmt->execute();
+                                    $stmt->bind_result($first, $last);
+                                    $stmt->fetch();
+                                    $trainee = $users_Low->dequeue();
+                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
+
+                                    if($trainee->named())
+                                        $users_Low->enqueue($trainee);
+                                    else {
+                                        $trainee->set_name($first, $last);
+                                        $users_Low->enqueue($trainee);
+                                    }
+
+                                }
+                                $stmt->close();
+                            }
+
+
+                            $array = array();
+
+                            $kMed = $users_Med->count();
+                            //printf("%d\n", $kMed);
+                            for ($j = 0; $j < $kMed; $j++) {
+                                $trainee = $users_Med->dequeue();
+                                array_push($array, $trainee->get_userID());
+                                $users_Med->enqueue($trainee);
+                                //printf("%d\n",$array[$j]);
+
+                            }
+
+                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
+                            if($stmt = $link->prepare($sql)){
+
+
+
+                             //   printf("%d\n", $kMed);
+                                for ($i = 0; $i < $kMed; $i++) {
+                                    $stmt->bind_param('i', $array[$i]);
+                                    $stmt->execute();
+                                    $stmt->bind_result($first, $last);
+                                    $stmt->fetch();
+                                    $trainee = $users_Med->dequeue();
+                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
+
+                                    if($trainee->named())
+                                        $users_Med->enqueue($trainee);
+                                    else {
+                                        $trainee->set_name($first, $last);
+                                        $users_Med->enqueue($trainee);
+                                    }
+
+                                }
+                                $stmt->close();
+                            }
+
+
+                            $array = array();
+
+                            $kHigh = $users_High->count();
+                          //  printf("%d\n", $kHigh);
+                            for ($j = 0; $j < $kHigh; $j++) {
+                                $trainee = $users_High->dequeue();
+                                array_push($array, $trainee->get_userID());
+                                $users_High->enqueue($trainee);
+                                //printf("%d\n",$array[$j]);
+
+                            }
+
+                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
+                            if($stmt = $link->prepare($sql)){
+
+
+
+                           //     printf("%d\n", $kHigh);
+                                for ($i = 0; $i < $kHigh; $i++) {
+                                    $stmt->bind_param('i', $array[$i]);
+                                    $stmt->execute();
+                                    $stmt->bind_result($first, $last);
+                                    $stmt->fetch();
+                                    $trainee = $users_High->dequeue();
+                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
+
+                                    if($trainee->named())
+                                        $users_High->enqueue($trainee);
+                                    else {
+                                        $trainee->set_name($first, $last);
+                                        $users_High->enqueue($trainee);
+                                    }
+
+                                }
+                                $stmt->close();
+                            }
+
+
+
+
+
 
 
                             /*
@@ -351,31 +527,40 @@
                              *
                              */
 
-                            /*
+
                             $nTrainers = $users_Trainer->count();
                             $kTrainees = $users_Trainee->count();
-                            */
+                            $FIFO_Trainee;
+                            $check = false;
 
 
 
 
-                            /*
                             for ($i = 0; $i < $nTrainers; $i++) {
                                 $trainer = $users_Trainer->dequeue();
 
                                 for ($j = 0; $j < $kTrainees; $j++) {
                                       $trainee = $users_Trainee->dequeue();
                                     if($trainer->get_shiftID() == $trainee->get_shiftID() && $trainee->isScheduled() == false) {
-                                        $usersNames[$trainer->get_shiftID()] = nl2br($trainer->get_name()." & \n".$trainee->get_name());
+                                        if(!$check){
+                                            $check = true;
+                                            $FIFO_Trainee = $trainee;
+                                        }
+                                        else if($FIFO_Trainee->get_priority() < $trainee->get_priority()){
+                                            $FIFO_Trainee = $trainee;
+                                        }
+
                                     }
                                     $users_Trainee->enqueue($trainee);
                                 }
+                                $usersNames[$trainer->get_shiftID()] = nl2br($trainer->get_name()." & \n".$FIFO_Trainee->get_name());
+                                $trainer->schedule();
+                                $FIFO_Trainee->schedule();
                             }
 
-                            */
 
 
-
+                                //echo $usersNames[0]->get_userID();
 
 
 
@@ -395,7 +580,7 @@
                                     $stmt->execute();
                                     $stmt->bind_result($first, $last);
                                 $stmt->fetch();
-
+                                    echo $last;
                                     $usersNames[$shift_ID] = $last.", ".$first;
 
                                 $stmt->close();
@@ -404,12 +589,18 @@
                         }
                             */
 
-                            /*
-
-                            */
+                        for ($i = 0; $i < 7; $i++) {
+                            echo "<tr><td>$weekDays[$i]</td>";
+                                for ($j = 0; $j < 6; $j++) {
+                                    $idx = ($i * 6) + $j;
+                                    echo "<td><p>$usersNames[$idx]</p></td>";
+                                }
+                                echo"</tr>";
+                            }
+                        }
 
                     ?>
-                    
+
                     </tbody>
                 </table>
             </div>
@@ -420,8 +611,7 @@
 
 <!-- Buttons
 ================================================== -->
-
-<div class="row">
+<div class="container">
     <div class="col-lg-6">
 
         <p class="bs-component">
@@ -438,7 +628,7 @@
                     <a href="#" class="btn btn-info dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
                     <ul class="dropdown-menu">
 
-                    <li><a href="#">Add Volunteer</a></li>
+                        <li><a href="#">Add Volunteer</a></li>
                         <li><a href="#">Edit Volunteer</a></li>
                         <li><a href="#">Remove Volunteer</a></li>
                     </ul>
@@ -448,58 +638,203 @@
     </div>
 </div>
 
-<!--
+
+
 <div class="bs-docs-section">
 
     <div class="row">
         <div class="col-lg-6">
             <div class="bs-component">
-                <div class="modal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h4 class="modal-title">Name</h4>
-                            </div>
-                            <div class="modal-body">
-                                <table id="Hours">
-                                    <tr>
-                                        <th>Hours</th>
-                                    </tr>
 
-                                <p>Skill Level:</p>
-                                <p>Telephone:</p>
-                                <p>E-mail:</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Name</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="hour1">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h1">12-1</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour2">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h2">1-2</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour3">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h3">2-3</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour4">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h4">3-4</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour5">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h5">4-5</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour6">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h6">5-6</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour7">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h7">6-7</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour8">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h8">7-8</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour9">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h9">8-9</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour10">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h10">9-10</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour11">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h11">10-11</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour12">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h12">11-12</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour13">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h1">12-1</tr>
+                            </thead>
+                        </table>
+
+                        <div class="hour14">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h2">1-2</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour15">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h3">2-3</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour16">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h4">3-4</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour17">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h5">4-5</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour18">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h6">5-6</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour19">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h7">6-7</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour20">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h8">7-8</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour21">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h9">8-9</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour22">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h10">9-10</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour23">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h11">10-11</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour24">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h12">11-12</tr>
+                                </thead>
+                            </table>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
                 </div>
+
             </div>
         </div>
-    </div>
-</div>
--->
-<div class="modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Name</h4>
-            </div>
-            <div class="modal-body">
-                <p>Skill Level:</p>
-                <p>Telephone:</p>
-                <p>E-mail:</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <footer>
     <div class="row">

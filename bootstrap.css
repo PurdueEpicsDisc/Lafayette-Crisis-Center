@@ -1274,6 +1274,10 @@ abbr[data-original-title] {
   font-size: 90%;
   text-transform: uppercase;
 }
+ tr, th {
+	width: 14%;
+	height: 50%;
+ }
 blockquote {
   padding: 10.5px 21px;
   margin: 0 0 21px;
@@ -1403,6 +1407,7 @@ pre code {
     width: 1170px;
   }
 }
+
 .container-fluid {
   margin-right: auto;
   margin-left: auto;
@@ -2056,6 +2061,7 @@ th {
   text-align: left;
 }
 .table {
+  
   width: 100%;
   max-width: 100%;
   margin-bottom: 5px;
