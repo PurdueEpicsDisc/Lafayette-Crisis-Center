@@ -99,6 +99,9 @@
                         $priorities= new SplFixedArray(42);
                         $usersNames = new SplFixedArray(42);
 
+                        $SHIFTS_PER_DAY = 5;
+                        $DAYS = 31;
+
 
 
                         class User {
@@ -109,13 +112,14 @@
                             private $scheduled;
                             private $last_name;
                             private $first_name;
+                            private $named;
 
                         public function __construct($userID, $shiftID, $priority)  {
                             $this->userID = $userID;
                             $this->shiftID = $shiftID;
                             $this->priority = $priority;
                             $this->scheduled = false;
-
+                            $this->named = false;
 
                         }
                             public function set_name($first, $last){
@@ -137,6 +141,11 @@
                             public function isScheduled(){
                                 return $this->scheduled;
                             }
+                            public function named(){
+                                $this->named = true;
+                            }
+
+
 
                             public function get_last_name(){
                                 return $this->last_name;
@@ -200,6 +209,7 @@
                                 $users_Trainee->enqueue(new_user($userID, $shiftID, $priority));
 
                             }
+
                             switch($priority) {
 
                                 case 1:
@@ -219,22 +229,218 @@
                         }
                         $stmt->close();
 
+                            $array = array();
 
-                            /*
-                             * Lets play the name game....
-                             */
+                            $kTrainees = $users_Trainee->count();
+                          //  printf("%d\n", $kTrainees);
+                           for ($j = 0; $j < $kTrainees; $j++) {
+                                    $trainee = $users_Trainee->dequeue();
+                                    array_push($array, $trainee->get_userID());
+                                    $users_Trainee->enqueue($trainee);
+                                    //printf("%d\n",$array[$j]);
 
-                            $sql = "SELECT FIRST,LAST FROM USERS WHERE SKILL_LEVEL=?";
+                           }
+
+                        /*
+                         * Lets play the name game....
+                         */
+                            //Trainiee name assigner
+
+                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
                             if($stmt = $link->prepare($sql)){
 
-                                $stmt->bind_param('i', $trainee = $users_Trainee->dequeue()->get_userID);
-                                $stmt->execute();
-                                $stmt->bind_result($first, $last);
-                                while($stmt->fetch()) {
-                                    printf("Volunteer: %s %s<br />", $first, $last);
+
+
+                           //     printf("%d\n", $kTrainees);
+                                for ($i = 0; $i < $kTrainees; $i++) {
+                                    $stmt->bind_param('i', $array[$i]);
+                                    $stmt->execute();
+                                    $stmt->bind_result($first, $last);
+                                    $stmt->fetch();
+                                    $trainee = $users_Trainee->dequeue();
+                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
+
+                                    if($trainee->named())
+                                        $users_Trainee->enqueue($trainee);
+                                    else {
+                                        $trainee->set_name($first, $last);
+                                        $users_Trainee->enqueue($trainee);
+                                        }
+
                                 }
                                 $stmt->close();
                             }
+
+
+
+
+                            //TRIANERR!!!!!!!!!!!!!!!
+
+
+                            $array = array();
+
+                            $kTrainers = $users_Trainer->count();
+                           // printf("%d\n", $kTrainers);
+                            for ($j = 0; $j < $kTrainers; $j++) {
+                                $trainer = $users_Trainer->dequeue();
+                                array_push($array, $trainer->get_userID());
+                                $users_Trainer->enqueue($trainer);
+                                //printf("%d\n",$array[$j]);
+
+                            }
+
+
+
+
+
+
+
+                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
+                            if($stmt = $link->prepare($sql)){
+
+
+
+                             //   printf("%d\n", $kTrainers);
+                                for ($i = 0; $i < $kTrainers; $i++) {
+                                    $stmt->bind_param('i', $array[$i]);
+                                    $stmt->execute();
+                                    $stmt->bind_result($first, $last);
+                                    $stmt->fetch();
+                                    $trainer = $users_Trainer->dequeue();
+                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
+
+                                    if($trainer->named())
+                                        $users_Trainer->enqueue($trainer);
+                                    else {
+                                        $trainer->set_name($first, $last);
+                                        $users_Trainer->enqueue($trainer);
+                                    }
+
+                                }
+                                $stmt->close();
+                            }
+
+                            //LOW PRIOR USERS!!!!!!!!!!!!!!!!
+                            $array = array();
+
+                            $kLow = $users_Low->count();
+                           // printf("%d\n", $kLow);
+                            for ($j = 0; $j < $kLow; $j++) {
+                                $trainee = $users_Low->dequeue();
+                                array_push($array, $trainee->get_userID());
+                                $users_Low->enqueue($trainee);
+                                //printf("%d\n",$array[$j]);
+
+                            }
+
+
+
+
+
+                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
+                            if($stmt = $link->prepare($sql)){
+
+
+
+                                //printf("%d\n", $kLow);
+                                for ($i = 0; $i < $kLow; $i++) {
+                                    $stmt->bind_param('i', $array[$i]);
+                                    $stmt->execute();
+                                    $stmt->bind_result($first, $last);
+                                    $stmt->fetch();
+                                    $trainee = $users_Low->dequeue();
+                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
+
+                                    if($trainee->named())
+                                        $users_Low->enqueue($trainee);
+                                    else {
+                                        $trainee->set_name($first, $last);
+                                        $users_Low->enqueue($trainee);
+                                    }
+
+                                }
+                                $stmt->close();
+                            }
+
+
+                            $array = array();
+
+                            $kMed = $users_Med->count();
+                            //printf("%d\n", $kMed);
+                            for ($j = 0; $j < $kMed; $j++) {
+                                $trainee = $users_Med->dequeue();
+                                array_push($array, $trainee->get_userID());
+                                $users_Med->enqueue($trainee);
+                                //printf("%d\n",$array[$j]);
+
+                            }
+
+                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
+                            if($stmt = $link->prepare($sql)){
+
+
+
+                             //   printf("%d\n", $kMed);
+                                for ($i = 0; $i < $kMed; $i++) {
+                                    $stmt->bind_param('i', $array[$i]);
+                                    $stmt->execute();
+                                    $stmt->bind_result($first, $last);
+                                    $stmt->fetch();
+                                    $trainee = $users_Med->dequeue();
+                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
+
+                                    if($trainee->named())
+                                        $users_Med->enqueue($trainee);
+                                    else {
+                                        $trainee->set_name($first, $last);
+                                        $users_Med->enqueue($trainee);
+                                    }
+
+                                }
+                                $stmt->close();
+                            }
+
+
+                            $array = array();
+
+                            $kHigh = $users_High->count();
+                          //  printf("%d\n", $kHigh);
+                            for ($j = 0; $j < $kHigh; $j++) {
+                                $trainee = $users_High->dequeue();
+                                array_push($array, $trainee->get_userID());
+                                $users_High->enqueue($trainee);
+                                //printf("%d\n",$array[$j]);
+
+                            }
+
+                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
+                            if($stmt = $link->prepare($sql)){
+
+
+
+                           //     printf("%d\n", $kHigh);
+                                for ($i = 0; $i < $kHigh; $i++) {
+                                    $stmt->bind_param('i', $array[$i]);
+                                    $stmt->execute();
+                                    $stmt->bind_result($first, $last);
+                                    $stmt->fetch();
+                                    $trainee = $users_High->dequeue();
+                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
+
+                                    if($trainee->named())
+                                        $users_High->enqueue($trainee);
+                                    else {
+                                        $trainee->set_name($first, $last);
+                                        $users_High->enqueue($trainee);
+                                    }
+
+                                }
+                                $stmt->close();
+                            }
+
+
+
+
 
 
 
@@ -246,25 +452,35 @@
 
                             $nTrainers = $users_Trainer->count();
                             $kTrainees = $users_Trainee->count();
+                            $FIFO_Trainee;
+                            $check = false;
 
 
 
 
-
-                            /*
                             for ($i = 0; $i < $nTrainers; $i++) {
                                 $trainer = $users_Trainer->dequeue();
 
                                 for ($j = 0; $j < $kTrainees; $j++) {
                                       $trainee = $users_Trainee->dequeue();
                                     if($trainer->get_shiftID() == $trainee->get_shiftID() && $trainee->isScheduled() == false) {
-                                        $usersNames[$trainer->get_shiftID()] = nl2br($trainer->get_name()." & \n".$trainee->get_name());
+                                        if(!$check){
+                                            $check = true;
+                                            $FIFO_Trainee = $trainee;
+                                        }
+                                        else if($FIFO_Trainee->get_priority() < $trainee->get_priority()){
+                                            $FIFO_Trainee = $trainee;
+                                        }
+
                                     }
                                     $users_Trainee->enqueue($trainee);
                                 }
+                                $usersNames[$trainer->get_shiftID()] = nl2br($trainer->get_name()." & \n".$FIFO_Trainee->get_name());
+                                $trainer->schedule();
+                                $FIFO_Trainee->schedule();
                             }
 
-                            */
+
 
                                 //echo $usersNames[0]->get_userID();
 
@@ -306,7 +522,7 @@
                         }
 
                     ?>
-                    
+
                     </tbody>
                 </table>
             </div>
