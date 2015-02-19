@@ -97,58 +97,58 @@
 
                     </tr>
                     <tr>
-                        <td id="1">Change</td>
-                        <td id="2">Change</td>
-                        <td id="3">Change</td>
-                        <td id="4">Change</td>
-                        <td id="5">Change</td>
-                        <td id="6">Change</td>
-                        <td id="7">Change</td>
+                        <td id="1"></td>
+                        <td id="2"></td>
+                        <td id="3"></td>
+                        <td id="4"></td>
+                        <td id="5"></td>
+                        <td id="6"></td>
+                        <td id="7"></td>
                     </tr>
                     <tr>
-                        <td id="8">Change</td>
-                        <td id="9">Change</td>
-                        <td id="10">Change</td>
-                        <td id="11">Change</td>
-                        <td id="12">Change</td>
-                        <td id="13">Change</td>
-                        <td id="14">Change</td>
+                        <td id="8"></td>
+                        <td id="9"></td>
+                        <td id="10"></td>
+                        <td id="11"></td>
+                        <td id="12"></td>
+                        <td id="13"></td>
+                        <td id="14"></td>
                     </tr>
                     <tr>
-                        <td id="15">Change</td>
-                        <td id="16">Change</td>
-                        <td id="17">Change</td>
-                        <td id="18">Change</td>
-                        <td id="19">Change</td>
-                        <td id="20">Change</td>
-                        <td id="21">Change</td>
+                        <td id="15"></td>
+                        <td id="16"></td>
+                        <td id="17"></td>
+                        <td id="18"></td>
+                        <td id="19"></td>
+                        <td id="20"></td>
+                        <td id="21"></td>
                     </tr>
                     <tr>
-                        <td id="22">Change</td>
-                        <td id="23">Change</td>
-                        <td id="24">Change</td>
-                        <td id="25">Change</td>
-                        <td id="26">Change</td>
-                        <td id="27">Change</td>
-                        <td id="28">Change</td>
+                        <td id="22"></td>
+                        <td id="23"></td>
+                        <td id="24"></td>
+                        <td id="25"></td>
+                        <td id="26"></td>
+                        <td id="27"></td>
+                        <td id="28"></td>
                     </tr>
                     <tr>
-                        <td id="29">Change</td>
-                        <td id="30">Change</td>
-                        <td id="31">Change</td>
-                        <td id="32">Change</td>
-                        <td id="33">Change</td>
-                        <td id="34">Change</td>
-                        <td id="35">Change</td>
+                        <td id="29"></td>
+                        <td id="30"></td>
+                        <td id="31"></td>
+                        <td id="32"></td>
+                        <td id="33"></td>
+                        <td id="34"></td>
+                        <td id="35"></td>
                     </tr>
                     <tr>
-                        <td id="36">Change</td>
-                        <td id="37">Change</td>
-                        <td id="38">Change</td>
-                        <td id="39">Change</td>
-                        <td id="40">Change</td>
-                        <td id="41">Change</td>
-                        <td id="42">Change</td>
+                        <td id="36"></td>
+                        <td id="37"></td>
+                        <td id="38"></td>
+                        <td id="39"></td>
+                        <td id="40"></td>
+                        <td id="41"></td>
+                        <td id="42"></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -418,12 +418,6 @@
 </div>
 
 
-
-<!-- Navs
- ================================================== -->
-
-
-
 <!-- Buttons
 ================================================== -->
 
@@ -454,7 +448,7 @@
     </div>
 </div>
 
-
+<!--
 <div class="bs-docs-section">
 
     <div class="row">
@@ -468,6 +462,11 @@
                                 <h4 class="modal-title">Name</h4>
                             </div>
                             <div class="modal-body">
+                                <table id="Hours">
+                                    <tr>
+                                        <th>Hours</th>
+                                    </tr>
+
                                 <p>Skill Level:</p>
                                 <p>Telephone:</p>
                                 <p>E-mail:</p>
@@ -482,7 +481,7 @@
         </div>
     </div>
 </div>
-
+-->
 <div class="modal">
     <div class="modal-dialog">
         <div class="modal-content">
