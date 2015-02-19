@@ -75,9 +75,9 @@
                 </h1>
             </div>
             <div class="bs-component">
-                <table class="table table-striped table-hover " border="1">
+                <table class="table table-striped table-hover " border="1" >
                     <thead>
-                    <tr>
+                    <tr >
                         <!--
                         <th style="font-size: 25px">Week of the<span id="week" style="font-size: 28px">1st</span></th>
                         <th>12 am - 4 am</th>
@@ -482,24 +482,189 @@
     </div>
 </div>
 -->
-<div class="modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Name</h4>
-            </div>
-            <div class="modal-body">
-                <p>Skill Level:</p>
-                <p>Telephone:</p>
-                <p>E-mail:</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <div class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Name</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="hour1">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h1">12-1</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour2">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h2">1-2</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour3">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h3">2-3</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour4">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h4">3-4</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour5">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h5">4-5</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour6">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h6">5-6</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour7">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h7">6-7</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour8">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h8">7-8</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour9">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h9">8-9</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour10">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h10">9-10</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour11">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h11">10-11</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour12">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h12">11-12</tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <div class="hour13">
+                        <table id="hours", border="1">
+                            <thead>
+                            <tr id="h1">12-1</tr>
+                            </thead>
+                        </table>
+
+                        <div class="hour14">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h2">1-2</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour15">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h3">2-3</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour16">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h4">3-4</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour17">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h5">4-5</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour18">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h6">5-6</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour19">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h7">6-7</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour20">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h8">7-8</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour21">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h9">8-9</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour22">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h10">9-10</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour23">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h11">10-11</tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="hour24">
+                            <table id="hours", border="1">
+                                <thead>
+                                <tr id="h12">11-12</tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
 <footer>
     <div class="row">
