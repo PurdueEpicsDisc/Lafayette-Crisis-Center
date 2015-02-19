@@ -50,7 +50,7 @@
                 <h1 id="tables">Schedule for <span id="pmonth">PMonth</span>
                     <script type="text/javascript">
 
-                        var my_month=new Date();
+                        var my_month= new Date();
                         var month_name=new Array(12);
                         month_name[0]="January";
                         month_name[1]="February";
@@ -75,29 +75,137 @@
                 </h1>
             </div>
             <div class="bs-component">
-                <table class="table table-striped table-hover ">
+                <table class="table table-striped table-hover " border="1">
                     <thead>
                     <tr>
-                        <th style="font-size: 25px">Week <span id="week" style="font-size: 28px">1</span></th>
+                        <!--
+                        <th style="font-size: 25px">Week of the<span id="week" style="font-size: 28px">1st</span></th>
                         <th>12 am - 4 am</th>
                         <th>4 am - 8 am</th>
                         <th>8 am - 12 pm</th>
                         <th>12 pm - 4 pm</th>
                         <th>4 pm - 8 pm</th>
                         <th>8 pm - 12 am</th>
+                        -->
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tues</th>
+                        <th>Wed</th>
+                        <th>Thur</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
 
+                    </tr>
+                    <tr>
+                        <td id="1"></td>
+                        <td id="2"></td>
+                        <td id="3"></td>
+                        <td id="4"></td>
+                        <td id="5"></td>
+                        <td id="6"></td>
+                        <td id="7"></td>
+                    </tr>
+                    <tr>
+                        <td id="8"></td>
+                        <td id="9"></td>
+                        <td id="10"></td>
+                        <td id="11"></td>
+                        <td id="12"></td>
+                        <td id="13"></td>
+                        <td id="14"></td>
+                    </tr>
+                    <tr>
+                        <td id="15"></td>
+                        <td id="16"></td>
+                        <td id="17"></td>
+                        <td id="18"></td>
+                        <td id="19"></td>
+                        <td id="20"></td>
+                        <td id="21"></td>
+                    </tr>
+                    <tr>
+                        <td id="22"></td>
+                        <td id="23"></td>
+                        <td id="24"></td>
+                        <td id="25"></td>
+                        <td id="26"></td>
+                        <td id="27"></td>
+                        <td id="28"></td>
+                    </tr>
+                    <tr>
+                        <td id="29"></td>
+                        <td id="30"></td>
+                        <td id="31"></td>
+                        <td id="32"></td>
+                        <td id="33"></td>
+                        <td id="34"></td>
+                        <td id="35"></td>
+                    </tr>
+                    <tr>
+                        <td id="36"></td>
+                        <td id="37"></td>
+                        <td id="38"></td>
+                        <td id="39"></td>
+                        <td id="40"></td>
+                        <td id="41"></td>
+                        <td id="42"></td>
                     </tr>
                     </thead>
                     <tbody>
+                    <script type="text/javascript">
+                        function returnArray() {
+                            var day = new Date();
+                            var month = day.getMonth()+1;
+                            var year = day.getFullYear();
+                            var startDay = new Date(year,month-1,1).getDay();
+                            return startDay;
+                        }
+                    </script>
                     <?php
+                        /*
+                         * All of this needs to be replaced with a new fetching algorithm
+                         */
                         $link = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
                         if (!$link) {
                             die("Connection failed: " . $mysqli->error());
                         }
-                        /**$users init to size of shifts change 42 **/
+                        /**$users init to number of shifts, 42 is a placeholder value **/
                         $users = new SplFixedArray(42);
                         $priorities= new SplFixedArray(42);
                         $usersNames = new SplFixedArray(42);
+                        $weekDays = array();
+
+
+                        // Open a MySQL connection
+                        /*
+                        $sql = "SELECT * FROM SHIFTS ";
+                        if($stmt = $link->prepare($sql)) {
+                            $stmt->execute();
+                            $stmt->bind_result($id, $userID, $shiftID, $priority);
+                            while ($stmt->fetch()) {
+                                if ($priority > $priorities[$shiftID]) {
+                                    $users[$shiftID] = $userID;
+                                    $priorities[$shiftID] = $priority;
+                                }
+                            }
+                            $stmt->close();
+                         */
+                            /* Convert userID -> Last, First */
+                            /*
+                                for($i = 0; $i < 56; $i++) {
+                                if($users[$i] != 0 && $priorities[$i] != 0) {
+                                    $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=$users[$i]";
+                                    if($stmt = $link->prepare($sql)) {
+                                        $stmt->execute();
+                                        $stmt->bind_result($first, $last);
+                                    while($stmt->fetch()) {
+                                        $usersNames[$i] = $last.", ".$first;
+                                    }
+                                    $stmt->close();
+                                    }
+                                }
+                            }
+
 
 
 
@@ -188,7 +296,7 @@
                          * Parses the SHIFTS database and sorts into 5 queues
                          * Trainer, Trainee, Low, Med, High
                          */
-
+                        /*
                         while($stmt->fetch()) {
 
 
@@ -218,12 +326,12 @@
 
                         }
                         $stmt->close();
-
+                        */
 
                             /*
                              * Lets play the name game....
                              */
-
+                            /*
                             $sql = "SELECT FIRST,LAST FROM USERS WHERE SKILL_LEVEL=?";
                             if($stmt = $link->prepare($sql)){
 
@@ -235,7 +343,7 @@
                                 }
                                 $stmt->close();
                             }
-
+                            */
 
 
                             /*
@@ -243,10 +351,10 @@
                              *
                              */
 
-
+                            /*
                             $nTrainers = $users_Trainer->count();
                             $kTrainees = $users_Trainee->count();
-
+                            */
 
 
 
@@ -266,7 +374,8 @@
 
                             */
 
-                                //echo $usersNames[0]->get_userID();
+
+
 
 
 
@@ -286,7 +395,7 @@
                                     $stmt->execute();
                                     $stmt->bind_result($first, $last);
                                 $stmt->fetch();
-                                    echo $last;
+
                                     $usersNames[$shift_ID] = $last.", ".$first;
 
                                 $stmt->close();
@@ -295,15 +404,9 @@
                         }
                             */
 
-                        for ($i = 0; $i < 7; $i++) {
-                            echo "<tr><td>$weekDays[$i]</td>";
-                                for ($j = 0; $j < 6; $j++) {
-                                    $idx = ($i * 6) + $j;
-                                    echo "<td><p>$usersNames[$idx]</p></td>";
-                                }
-                                echo"</tr>";
-                            }
-                        }
+                            /*
+
+                            */
 
                     ?>
                     
@@ -315,41 +418,6 @@
 </div>
 
 
-
-<!-- Navs
- ================================================== -->
-
-
-
-
-<div class="row">
-    <div class="col-lg-4">
-        <div class="page_changer">
-            <ul class="pagination pagination-sm">
-                <li><button type ="button" onclick="decrement()">&laquo;</button></li>
-                <li><button type ="button" onclick="decrement()">Prev</button></li>
-                <li><button type ="button" onclick="increment()">Next</button></li>
-                <li><button type ="button" onclick="increment()">&raquo;</button></li>
-            </ul>
-            <script>
-                var count = 1;
-                function increment() {
-                    ++count;
-                    if(count > 4)
-                        count = 1;
-                    document.getElementById("week").innerHTML = 7*count;
-                }
-                function decrement() {
-                    --count;
-                    if(count < 1)
-                        count = 4;
-                    document.getElementById("week").innerHTML = 7*count;
-                }
-            </script>
-        </div>
-    </div>
-
-</div>
 <!-- Buttons
 ================================================== -->
 
@@ -380,7 +448,7 @@
     </div>
 </div>
 
-
+<!--
 <div class="bs-docs-section">
 
     <div class="row">
@@ -394,6 +462,11 @@
                                 <h4 class="modal-title">Name</h4>
                             </div>
                             <div class="modal-body">
+                                <table id="Hours">
+                                    <tr>
+                                        <th>Hours</th>
+                                    </tr>
+
                                 <p>Skill Level:</p>
                                 <p>Telephone:</p>
                                 <p>E-mail:</p>
@@ -408,7 +481,7 @@
         </div>
     </div>
 </div>
-
+-->
 <div class="modal">
     <div class="modal-dialog">
         <div class="modal-content">

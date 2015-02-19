@@ -35,7 +35,7 @@ function addShift($user, $shift, $priority)
     }
     $stmt->close();
 }
-addShift(84, 1, 1);
+addShift(7, 2, 2);
 
 $link->close()
 
