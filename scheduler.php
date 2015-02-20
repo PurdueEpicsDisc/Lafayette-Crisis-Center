@@ -99,6 +99,7 @@
                         $priorities= new SplFixedArray(42);
                         $usersNames = new SplFixedArray(42);
 
+
                         $SHIFTS_PER_DAY = 5;
                         $DAYS = 31;
 
@@ -188,8 +189,8 @@
                         if($stmt = $link->prepare($sql)){
                             $stmt->execute();
                             $stmt->bind_result($id, $userID, $shiftID , $priority, $skill_level);
-
-
+                            $number_of_rows = mysqli_stmt_num_rows($stmt);
+                            $Schedule = new SplFixedArray($number_of_rows);
 
 
 
@@ -207,7 +208,7 @@
                             }
                             if($skill_level == $TRAINEE){
                                 $users_Trainee->enqueue(new_user($userID, $shiftID, $priority));
-
+                                continue;
                             }
 
                             switch($priority) {
@@ -460,6 +461,7 @@
 
                             for ($i = 0; $i < $nTrainers; $i++) {
                                 $trainer = $users_Trainer->dequeue();
+                                $check = false;
 
                                 for ($j = 0; $j < $kTrainees; $j++) {
                                       $trainee = $users_Trainee->dequeue();
@@ -475,10 +477,35 @@
                                     }
                                     $users_Trainee->enqueue($trainee);
                                 }
-                                $usersNames[$trainer->get_shiftID()] = nl2br($trainer->get_name()." & \n".$FIFO_Trainee->get_name());
-                                $trainer->schedule();
-                                $FIFO_Trainee->schedule();
+                                if($usersNames[$trainer->get_shiftID()] == null) {
+                                    $usersNames[$trainer->get_shiftID()] = nl2br($trainer->get_name() . " & \n" . $FIFO_Trainee->get_name());
+                                    $trainer->schedule();
+                                    $FIFO_Trainee->schedule();
+                                }
                             }
+
+
+                                for($i = 0; $i < $kHigh; $i++){
+                                    $user = $users_High->dequeue();
+                                    if($usersNames[$user->get_shiftID()] == null && !$user->isScheduled())
+                                        $usersNames[$user->get_shiftID()] = $user->get_name();
+                                        $user->schedule();
+                                }
+
+                                for($i = 0; $i < $kMed; $i++){
+                                    $user = $users_Med->dequeue();
+                                    if($usersNames[$user->get_shiftID()] == null && !$user->isScheduled())
+                                        $usersNames[$user->get_shiftID()] = $user->get_name();
+                                        $user->schedule();
+                                }
+
+                                for($i = 0; $i < $kLow; $i++){
+                                    $user = $users_Low->dequeue();
+                                    if($usersNames[$user->get_shiftID()] == null && !$user->isScheduled())
+                                        $usersNames[$user->get_shiftID()] = $user->get_name();
+                                        $user->schedule();
+                                }
+
 
 
 
