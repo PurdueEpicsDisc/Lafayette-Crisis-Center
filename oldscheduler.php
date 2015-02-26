@@ -360,11 +360,12 @@
                                     }
                                     $users_Trainee->enqueue($trainee);
                                 }
-                                if($usersNames[$trainer->get_shiftID()] == null) {
+                                if($usersNames[$trainer->get_shiftID()] == null && $FIFO_Trainee != null) {
                                     $usersNames[$trainer->get_shiftID()] = nl2br($trainer->get_name() . " & \n" . $FIFO_Trainee->get_name());
                                     $trainer->schedule();
                                     $FIFO_Trainee->schedule();
                                 }
+                                $FIFO_Trainee = null;
                             }
                             for($i = 0; $i < $kHigh; $i++){
                                 $user = $users_High->dequeue();
