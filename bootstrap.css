@@ -5309,6 +5309,7 @@ button.close {
   left: 0;
   z-index: 1050;
   -webkit-overflow-scrolling: touch;
+  overflow: scroll;
   outline: 0;
 }
 .modal.fade .modal-dialog {

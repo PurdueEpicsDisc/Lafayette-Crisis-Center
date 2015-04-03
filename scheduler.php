@@ -77,6 +77,7 @@
             <div class="bs-component">
                 <table class="table table-striped table-hover " border="1">
                     <thead>
+
                     <tr>
                         <!--
                         <th style="font-size: 25px">Week of the<span id="week" style="font-size: 28px">1st</span></th>
@@ -97,7 +98,7 @@
 
                     </tr>
                     <tr>
-                        <td id="1">Date TBD</td>
+                        <td id="1" ">Date TBD</td>
                         <td id="2">Date TBD</td>
                         <td id="3">Date TBD</td>
                         <td id="4">Date TBD</td>
@@ -789,93 +790,20 @@
     </div>
 </div>
 
-    <div class="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                    <div class="shift1">
-                        <table id="hours1", border="1">
-                            <thead>
-                            <h1>February 28, 2015</h1>
-                            <tr id="h1"><h4>12 AM - 8 AM</h4></tr>
-                            <hr>
-                            <p>Instructor: John Jacob</p>
-                            <p>Trainee: James Williams</p>
-                            <br>
+<div class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="ajaxLoader">
 
-                                <script type="text/javascript">
-                                    var month_name[12] = new Array(12);
-                                    month_name[0]="January";
-                                    month_name[1]="February";
-                                    month_name[2]="March";
-                                    month_name[3]="April";
-                                    month_name[4]="May";
-                                    month_name[5]="June";
-                                    month_name[6]="July";
-                                    month_name[7]="August";
-                                    month_name[8]="September";
-                                    month_name[9]="October";
-                                    month_name[10]="November";
-                                    month_name[11]="December";
-                                    var php_date = "<?php $currentDay = date("j"); echo $currentDay; ?>";
-                                    var php_month = "<?php echo $month; ?>";
-                                    var php_year = "<?php echo $year; ?>";
-                                    var inner = "<h1>" + month_name[php_month] + php_date.toString() + "," + php_year.toString() + "</h1><tr id=\"h1\"><h4>12 AM - 8 AM</h4></tr><hr><p>Instructor: John Jacob</p><p>Trainee: James Williams</p><br>";
-                                    alert(inner);
-                                    document.getElementById("hours1").innerHTML = inner;
-                                </script>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="shift2">
-                        <table id="hours2", border="1">
-                            <thead>
-                                <tr id="h2"><h4>8 AM - 12 PM</h4></tr>
-                                <hr>
-                                <p>Volunteer: Frederick Graham</p>
-                                <br>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="shift3">
-                        <table id="hours3", border="1">
-                            <thead>
-                                <tr id="h3"><h4>12 PM - 4 PM</h4></tr>
-                                <hr>
-                                <p>Volunteer: Abraham Lincoln</p>
-                                <br>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="shift4">
-                        <table id="hours4", border="1">
-                            <thead>
-                                <tr id="h4"><h4>4 PM - 8 PM</h4></tr>
-                                <hr>
-                                <p>Volunteer: John Adams</p>
-                                <br>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="shift5">
-                        <table id="hours5", border="1">
-                            <thead>
-                                <tr id="h5"><h4>8 PM - 12 AM</h4> </tr>
-                                <hr>
-                                <p>Volunteer: John Adams</p>
-                                <br>
-                            </thead>
-                        </table>
-                    </div>
-                    </div>
 
-                </div>
 
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
         </div>
+    </div>
+</div>
 
 <footer>
     <div class="row">
@@ -894,12 +822,30 @@
 
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script>
+
+
     $(document).ready(function(){
+
         $('td').click(
             function() {
                 var $p = $(this).text();
-                $('.modal').show();
-                $('.modal-title').text($p);
+                if ($(this).text() != "PREVIOUS MONTH") {
+                    $('.modal').show();
+                    var php_date = "<?php $currentDay = date("j"); echo $currentDay; ?>";
+                    var php_month = "<?php echo date("M"); ?>";
+                    var php_year = "<?php echo $year; ?>";
+                    var current = php_month + " " + $p + ", " + php_year;
+                    $('.modal-title').text(current);
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                            document.getElementById("ajaxLoader").innerHTML = xmlhttp.responseText;
+                        }
+                    }
+                    xmlhttp.open("GET", "loadModal.php?sid=" + $p, true);
+                    xmlhttp.send();
+                }
+
             }
         );
         $('button').click(
@@ -907,7 +853,6 @@
                 $('.modal').hide();
             });
     });
-
 </script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/bootswatch.js"></script>

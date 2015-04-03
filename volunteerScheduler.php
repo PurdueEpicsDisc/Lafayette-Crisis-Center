@@ -104,6 +104,8 @@
                             <td id="5">Date TBD</td>
                             <td id="6">Date TBD</td>
                             <td id="7">Date TBD</td>
+
+
                         </tr>
                         <tr>
                             <td id="8">Date TBD</td>
@@ -162,6 +164,142 @@
                             }
                         </script>
 
+                        <?php
+                        // formula for calculating start weekday of month
+                        // https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html
+                        $date = 1;
+                        $isLeap = date("L");
+                        $month = date("m");
+                        $year = date("Y");
+
+                        $digits = $year % 100;
+
+                        $last = $digits;
+                        $digits = $digits / 4;
+
+                        $digits = $digits + $date;
+
+                        // Month Key Value Dates: JFM AMJ JAS OND 144 025 036 146
+                        if ($isLeap == 1) {
+                            if ($month == 1 || $month == 2) {
+                                $digits = $digits - 1;
+                            }
+                        }
+                        switch ($month) {
+                            case 1:
+                                $digits = $digits + 1;
+                                break;
+                            case 2:
+                                $digits = $digits + 4;
+                                break;
+                            case 3:
+                                $digits = $digits + 4;
+                                break;
+                            case 4:
+                                $digits = $digits + 0;
+                                break;
+                            case 5:
+                                $digits = $digits + 2;
+                                break;
+                            case 6:
+                                $digits = $digits + 5;
+                                break;
+                            case 7:
+                                $digits = $digits + 0;
+                                break;
+                            case 8:
+                                $digits = $digits + 3;
+                                break;
+                            case 9:
+                                $digits = $digits + 6;
+                                break;
+                            case 10:
+                                $digits = $digits + 1;
+                                break;
+                            case 11:
+                                $digits = $digits + 4;
+                                break;
+                            case 12:
+                                $digits = $digits + 4;
+                                break;
+                        }
+                        // THIS HARDCODED VALUE WILL CHANGE IN THE YEAR January 1st, 2100
+                        // What to change to: For a Gregorian date, add 0 for 1900's, 6
+                        // for 2000's, 4 for 1700's, 2 for 1800's; for other years, add or
+                        // subtract multiples of 400.
+                        if ($year >= 2100) {
+                            echo "ENTER SCHEDULER.PHP AND GO TO LINE NUMBER 233. NUMERICAL CALCULATION ERROR HAS OCCURRED. REFERENCE COMMENTS ON LINE NUMBERS 226-229";
+                        }
+                        $digits = $digits + 6; //Do not change line number without changing echo statement above
+
+                        $digits = $digits + $last;
+
+                        $day = $digits % 7;
+
+
+                        // Sunday = 1, etc.
+
+
+                        ?>
+                        <script type="text/javascript">
+                            // php_VARNAME grabs from PHP above this script
+                            var php_date = "<?php echo $day; ?>";
+                            var php_month = "<?php echo $month; ?>";
+                            var php_isLeap = "<?php echo $isLeap; ?>";
+                            var monthOver = 0;
+                            var monthDates = 0;
+                            // i runs through the element IDs of the month table
+                            for (var i = 1; i < 43; i++) {
+                                var name = i.toString();
+                                // days prior to the start of the month
+                                if (i < php_date) {
+                                    document.getElementById(name).innerHTML = "PREVIOUS MONTH";
+                                }
+                                // month starting
+                                else {
+                                    monthDates += 1;
+                                    if (php_month == 1 || php_month == 3 || php_month == 5 || php_month == 7 || php_month == 8 || php_month == 10 || php_month == 12) {
+                                        if (monthDates <= 31) {
+                                            var day = monthDates.toString();
+                                            document.getElementById(name).innerHTML = day;
+                                        }
+                                        else {
+                                            document.getElementById(name).innerHTML = " ";
+                                        }
+                                    }
+                                    else if (php_month == 4 || php_month == 6 || php_month == 9 || php_month == 11) {
+                                        if (monthDates <= 30) {
+                                            var day = monthDates.toString();
+                                            document.getElementById(name).innerHTML = day;
+                                        }
+                                        else {
+                                            document.getElementById(name).innerHTML = "              ";
+                                        }
+                                    }
+                                    else if (php_month == 2) {
+                                        if (php_isLeap == 1) {
+                                            if (monthDates <= 29) {
+                                                var day = monthDates.toString();
+                                                document.getElementById(name).innerHTML = day;
+                                            }
+                                            else {
+                                                document.getElementById(name).innerHTML = "              ";
+                                            }
+                                        }
+                                        else {
+                                            if (monthDates <= 28) {
+                                                var day = monthDates.toString();
+                                                document.getElementById(name).innerHTML = day;
+                                            }
+                                            else {
+                                                document.getElementById(name).innerHTML = "              ";
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        </script>
                         </tbody>
                     </table>
                 </div>
@@ -616,7 +754,8 @@
 
         <p class="bs-component">
             <a href="addShift.html" class="btn btn-success">Add new Shifts</a>
-
+            <a href="editShift.html" class="btn btn-warning">Edit Shifts</a>
+            <a href="removeShift.html" class="btn btn-danger">Remove Shifts</a>
         </p>
 
 
@@ -654,20 +793,45 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
                 <div class="shift1">
-                    <table id="hours", border="1">
+                    <table id="hours1", border="1">
                         <thead>
-                        <h1>February 28, 2015</h1>
+                        <h2>February 28, 2015</h2>
                         <tr id="h1"><h4>12 AM - 8 AM</h4></tr>
                         <hr>
                         <p>Instructor: John Jacob</p>
                         <p>Trainee: James Williams</p>
                         <br>
+
+                        <script type="text/javascript">
+                            var month_name[12] = new Array(12);
+                            month_name[0]="January";
+                            month_name[1]="February";
+                            month_name[2]="March";
+                            month_name[3]="April";
+                            month_name[4]="May";
+                            month_name[5]="June";
+                            month_name[6]="July";
+                            month_name[7]="August";
+                            month_name[8]="September";
+                            month_name[9]="October";
+                            month_name[10]="November";
+                            month_name[11]="December";
+                            var php_date = "<?php $currentDay = date("j"); echo $currentDay; ?>";
+                            var php_month = "<?php echo $month; ?>";
+                            var php_year = "<?php echo $year; ?>";
+                            var inner = "<h1>" + month_name[php_month] + php_date.toString() + "," + php_year.toString() + "</h1><tr id=\"h1\"><h4>12 AM - 8 AM</h4></tr><hr><p>Instructor: John Jacob</p><p>Trainee: James Williams</p><br>";
+                            alert(inner);
+                            document.getElementById("hours1").innerHTML = inner;
+                        </script>
                         </thead>
                     </table>
                 </div>
                 <div class="shift2">
-                    <table id="hours", border="1">
+                    <table id="hours2", border="1">
                         <thead>
                         <tr id="h2"><h4>8 AM - 12 PM</h4></tr>
                         <hr>
@@ -677,7 +841,7 @@
                     </table>
                 </div>
                 <div class="shift3">
-                    <table id="hours", border="1">
+                    <table id="hours3", border="1">
                         <thead>
                         <tr id="h3"><h4>12 PM - 4 PM</h4></tr>
                         <hr>
@@ -687,7 +851,7 @@
                     </table>
                 </div>
                 <div class="shift4">
-                    <table id="hours", border="1">
+                    <table id="hours4", border="1">
                         <thead>
                         <tr id="h4"><h4>4 PM - 8 PM</h4></tr>
                         <hr>
@@ -697,7 +861,7 @@
                     </table>
                 </div>
                 <div class="shift5">
-                    <table id="hours", border="1">
+                    <table id="hours5", border="1">
                         <thead>
                         <tr id="h5"><h4>8 PM - 12 AM</h4> </tr>
                         <hr>
@@ -707,9 +871,7 @@
                     </table>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+
         </div>
 
     </div>
