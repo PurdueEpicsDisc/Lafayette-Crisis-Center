@@ -95,13 +95,51 @@
                             die("Connection failed: " . $mysqli->error());
                         }
                         /**$users init to size of shifts change 42 **/
+                        $SHIFTS_PER_DAY = 5;  // dynamically get a number from a GUI that is editable by LCC admins
+                        $DAYS = 31;
+                        $shifts = $SHIFTS_PER_DAY * $DAYS;
+
                         $users = new SplFixedArray(42);
                         $priorities= new SplFixedArray(42);
-                        $usersNames = new SplFixedArray(42);
+                        $usersNames = new SplFixedArray($shifts);
+                        $shift_count = new SplFixedArray($shifts);
+                        $user_shifts = array();
+
+                        //intialize shift_count to equal # of shifts at a given index
+                        // where the index is the shift id
+
+                        for($i = 0; $i < $shifts; $i++){
+
+                            $shift_count[$i] = 2; // change to dynamic, hardcoded for testing
+
+                        }
 
 
-                        $SHIFTS_PER_DAY = 5;
-                        $DAYS = 31;
+                       // $number_of_rows = mysqli_stmt_num_rows($stmt);
+                       // $Schedule = new SplFixedArray($number_of_rows);
+
+
+
+                    class date_n_time{
+                        private $date;
+                        private $shiftID;
+                        private $start;
+                        private $end;
+
+                        private function __construct($date, $shiftID, $start, $end){
+                            $this->shiftId = $shiftID;
+                            $this->date = $date;
+                            $this->start = $start;
+                            $this->end = $end;
+                        }
+
+                        public function get_date() {return $this->date;}
+                        public function get_shiftID() {return $this->shiftID;}
+                        public function get_start() {return $this->start;}
+                        public function get_end() {return $this->end;}
+
+
+                    }
 
 
 
@@ -152,7 +190,7 @@
                                 return $this->last_name;
                             }
 
-                            public function get_fist_name(){
+                            public function get_first_name(){
                                 return $this->first_name;
                             }
                             public function get_userID(){
@@ -457,6 +495,12 @@
                             $check = false;
 
 
+                            $sql = "DELETE FROM FUTURE_SCHEDULE";
+                            if($stmt = $link->prepare($sql)){
+                                $stmt->execute();
+
+                            }
+                            $stmt->close();
 
 
                             for ($i = 0; $i < $nTrainers; $i++) {
@@ -477,8 +521,11 @@
                                     }
                                     $users_Trainee->enqueue($trainee);
                                 }
-                                if($usersNames[$trainer->get_shiftID()] == null && $FIFO_Trainee != null) {
-                                    $usersNames[$trainer->get_shiftID()] = nl2br($trainer->get_name() . " & \n" . $FIFO_Trainee->get_name());
+                                if($shift_count[$trainer->get_shiftID()] > 0){
+                                    $shift_count->offsetSet($trainer->get_shiftID(), $shift_count[$trainer->get_shiftID()] - 1);
+                                    array_push( $user_shifts, $trainer);
+                                    array_push ($user_shifts, $FIFO_Trainee);
+
                                     $trainer->schedule();
                                     $FIFO_Trainee->schedule();
                                 }
@@ -488,24 +535,56 @@
 
                                 for($i = 0; $i < $kHigh; $i++){
                                     $user = $users_High->dequeue();
-                                    if($usersNames[$user->get_shiftID()] == null && !$user->isScheduled())
-                                        $usersNames[$user->get_shiftID()] = $user->get_name();
+                                    if($shift_count[$user->get_shiftID()] > 0 ) {
+                                        $shift_count->offsetSet($user->get_shiftID(), $shift_count[$user->get_shiftID()] - 1);
+                                        array_push($user_shifts, $user);
                                         $user->schedule();
+                                    }
                                 }
 
                                 for($i = 0; $i < $kMed; $i++){
                                     $user = $users_Med->dequeue();
-                                    if($usersNames[$user->get_shiftID()] == null && !$user->isScheduled())
-                                        $usersNames[$user->get_shiftID()] = $user->get_name();
+                                    if($shift_count[$user->get_shiftID()] > 0 ) {
+                                        $shift_count->offsetSet($user->get_shiftID(), $shift_count[$user->get_shiftID()] - 1);
+                                        array_push($user_shifts, $user);
                                         $user->schedule();
+                                    }
                                 }
 
                                 for($i = 0; $i < $kLow; $i++){
                                     $user = $users_Low->dequeue();
-                                    if($usersNames[$user->get_shiftID()] == null && !$user->isScheduled())
-                                        $usersNames[$user->get_shiftID()] = $user->get_name();
+                                    if($shift_count[$user->get_shiftID()] > 0 ) {
+                                        $shift_count->offsetSet($user->get_shiftID(), $shift_count[$user->get_shiftID()] - 1);
+                                        array_push($user_shifts, $user);
                                         $user->schedule();
+                                    }
                                 }
+
+                            //Push to the database and store the users scheduled at shift location.
+
+
+                            $sql = "INSERT INTO FUTURE_SCHEDULE(ShiftID, UserID, FIRST, LAST) VALUES(?, ?, ?, ?)";
+                            if($stmt = $link->prepare($sql)){
+
+
+
+                                $count = count($user_shifts);
+                                for ($i = 0; $i < $count; $i++) {
+
+                                    $stmt->bind_param('iiss', $user_shifts[$i]->get_shiftID(), $user_shifts[$i]->get_userID(),
+                                            $user_shifts[$i]->get_first_name(), $user_shifts[$i]->get_last_name());
+                                    $stmt->execute();
+
+
+                                }
+                                $stmt->close();
+                            }
+
+
+
+
+
+
 
 
 
