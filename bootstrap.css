@@ -257,6 +257,24 @@ th {
     border: 1px solid #ddd !important;
   }
 }
+  .table-pop-menu {
+    border: 0px black solid;
+    vertical-align: middle;
+
+  }
+  .table-pop-menu td{
+    border: 0px black solid;
+    width: 30%;
+  }
+  .table-pop-menu th{
+    border: 0px black solid;
+    height: 20%;
+  }
+  .table-notation, td th{
+    width: 30%;
+    text-align: center;
+  }
+
 @font-face {
   font-family: 'Glyphicons Halflings';
   src: url('../fonts/glyphicons-halflings-regular.eot');
@@ -1274,6 +1292,10 @@ abbr[data-original-title] {
   font-size: 90%;
   text-transform: uppercase;
 }
+ tr, th {
+	width: 14%;
+	height: 50%;
+ }
 blockquote {
   padding: 10.5px 21px;
   margin: 0 0 21px;
@@ -1403,6 +1425,7 @@ pre code {
     width: 1170px;
   }
 }
+
 .container-fluid {
   margin-right: auto;
   margin-left: auto;
@@ -2056,6 +2079,7 @@ th {
   text-align: left;
 }
 .table {
+  
   width: 100%;
   max-width: 100%;
   margin-bottom: 5px;
@@ -5285,6 +5309,7 @@ button.close {
   left: 0;
   z-index: 1050;
   -webkit-overflow-scrolling: touch;
+  overflow: scroll;
   outline: 0;
 }
 .modal.fade .modal-dialog {
