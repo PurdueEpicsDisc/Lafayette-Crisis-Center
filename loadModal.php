@@ -1,4 +1,9 @@
 
+<!-- For any questions regarding this code, contact:
+    Pedro Del Moral Lopez
+    513-284-5722
+    pdelmora@purdue.edu
+    -->
 <div class="shift1">
     <table id="hours1", border="1">
         <thead>

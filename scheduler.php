@@ -1,3 +1,9 @@
+<!-- questions regarding any of the html or javascript code can be directed to:
+    Pedro Del Moral
+    513-284-5722
+    pdelmora@purdue.edu
+    -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
