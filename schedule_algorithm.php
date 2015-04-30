@@ -4,7 +4,32 @@
  * User: Cnitz
  * Date: 4/16/15
  * Time: 10:49 AM
+ *
+ *
+ * The purpose of this file is run the scheduling algorithm. When this file is loaded
+ * it will get its information from the SHIFTS and USER tables in the database.
+ * It uses the information and creates the schedule and stores the results into the
+ * table FUTURE_SCHEDULE.
+ *
+ * Skill Level:
+ * 0 = Trainee
+ * 1 = Normal Volunteer
+ * 2 = Trainer
+ *
+ *
+ * How it works:
+ * 1. Fetches data from SHIFTS and stores corresponding information in a User class
+ *  1.1. Fills an array with numbers that is used to limit the number of people working per shift.
+ * 2. Then stores the User into a queue based on their skill level. e.g. 0,1,2
+ * 3. Fetches information based on USER_ID from the USER database and populates the User class with a name
+ * 4. Deletes all current values stored in FUTURE_SCHEDULE
+ * 5. Then begins scheduling
+ * 6. First it traverses the trainee and trainer queue and makes pairs and schedules them
+ * 7. Then it traverses the other 3 queues based on priority starting with high -> low
+ * 8. And schedules the first person it encounters if the shift is available
+ * 9. Writes all information to the Future schedule table on the database
  */
+
                         $link = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
                         if (!$link) {
                             die("Connection failed: " . $mysqli->error());

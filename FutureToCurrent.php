@@ -6,6 +6,12 @@
  * Time: 10:59 AM
  */
 
+/**
+ * This file transfers the information in FUTURE_SCHEDULE and transfers it to CURRENT_SCHEDULE
+ * CURRENT_SCHEDULE holds the schedule that is displayed on the front end.
+ * FUTURE_SCHEDULE holds the schedule that has been made by schedule_algorithm
+ */
+
 $link = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
 if(!$link)
 {
