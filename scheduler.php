@@ -1,3 +1,9 @@
+<!-- questions regarding any of the html or javascript code can be directed to:
+    Pedro Del Moral
+    513-284-5722
+    pdelmora@purdue.edu
+    -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,6 +83,7 @@
             <div class="bs-component">
                 <table class="table table-striped table-hover " border="1">
                     <thead>
+
                     <tr>
                         <!--
                         <th style="font-size: 25px">Week of the<span id="week" style="font-size: 28px">1st</span></th>
@@ -97,58 +104,60 @@
 
                     </tr>
                     <tr>
-                        <td id="1"></td>
-                        <td id="2"></td>
-                        <td id="3"></td>
-                        <td id="4"></td>
-                        <td id="5"></td>
-                        <td id="6"></td>
-                        <td id="7"></td>
+                        <td id="1" ">Date TBD</td>
+                        <td id="2">Date TBD</td>
+                        <td id="3">Date TBD</td>
+                        <td id="4">Date TBD</td>
+                        <td id="5">Date TBD</td>
+                        <td id="6">Date TBD</td>
+                        <td id="7">Date TBD</td>
+
+
                     </tr>
                     <tr>
-                        <td id="8"></td>
-                        <td id="9"></td>
-                        <td id="10"></td>
-                        <td id="11"></td>
-                        <td id="12"></td>
-                        <td id="13"></td>
-                        <td id="14"></td>
+                        <td id="8">Date TBD</td>
+                        <td id="9">Date TBD</td>
+                        <td id="10">Date TBD</td>
+                        <td id="11">Date TBD</td>
+                        <td id="12">Date TBD</td>
+                        <td id="13">Date TBD</td>
+                        <td id="14">Date TBD</td>
                     </tr>
                     <tr>
-                        <td id="15"></td>
-                        <td id="16"></td>
-                        <td id="17"></td>
-                        <td id="18"></td>
-                        <td id="19"></td>
-                        <td id="20"></td>
-                        <td id="21"></td>
+                        <td id="15">Date TBD</td>
+                        <td id="16">Date TBD</td>
+                        <td id="17">Date TBD</td>
+                        <td id="18">Date TBD</td>
+                        <td id="19">Date TBD</td>
+                        <td id="20">Date TBD</td>
+                        <td id="21">Date TBD</td>
                     </tr>
                     <tr>
-                        <td id="22"></td>
-                        <td id="23"></td>
-                        <td id="24"></td>
-                        <td id="25"></td>
-                        <td id="26"></td>
-                        <td id="27"></td>
-                        <td id="28"></td>
+                        <td id="22">Date TBD</td>
+                        <td id="23">Date TBD</td>
+                        <td id="24">Date TBD</td>
+                        <td id="25">Date TBD</td>
+                        <td id="26">Date TBD</td>
+                        <td id="27">Date TBD</td>
+                        <td id="28">Date TBD</td>
                     </tr>
                     <tr>
-                        <td id="29"></td>
-                        <td id="30"></td>
-                        <td id="31"></td>
-                        <td id="32"></td>
-                        <td id="33"></td>
-                        <td id="34"></td>
-                        <td id="35"></td>
+                        <td id="29">Date TBD</td>
+                        <td id="30">Date TBD</td>
+                        <td id="31">Date TBD</td>
+                        <td id="32">Date TBD</td>
+                        <td id="33">Date TBD</td>
+                        <td id="34">Date TBD</td>
+                        <td id="35">Date TBD</td>
                     </tr>
                     <tr>
-                        <td id="36"></td>
-                        <td id="37"></td>
-                        <td id="38"></td>
-                        <td id="39"></td>
-                        <td id="40"></td>
-                        <td id="41"></td>
-                        <td id="42"></td>
+                        <td id="36">Date TBD</td>
+                        <td id="37">Date TBD</td>
+                        <td id="38">Date TBD</td>
+                        <td id="39">Date TBD</td>
+                        <td id="40">Date TBD</td>
+                        <td id="41">Date TBD</td>
+                        <td id="42">Date TBD</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -162,444 +171,147 @@
                         }
                     </script>
 
+                    <?php
+                        // formula for calculating start weekday of month
+                        // https://cs.uwaterloo.ca/~alopez-o/math-faq/node73.html
+                        $date = 1;
+                        $isLeap = date("L");
+                        $month = date("m");
+                        $year = date("Y");
+
+                        $digits = $year % 100;
+
+                        $last = $digits;
+                        $digits = $digits / 4;
+
+                        $digits = $digits + $date;
+
+                        // Month Key Value Dates: JFM AMJ JAS OND 144 025 036 146
+                        if ($isLeap == 1) {
+                            if ($month == 1 || $month == 2) {
+                                $digits = $digits - 1;
+                            }
+                        }
+                        switch ($month) {
+                            case 1:
+                                $digits = $digits + 1;
+                                break;
+                            case 2:
+                                $digits = $digits + 4;
+                                break;
+                            case 3:
+                                $digits = $digits + 4;
+                                break;
+                            case 4:
+                                $digits = $digits + 0;
+                                break;
+                            case 5:
+                                $digits = $digits + 2;
+                                break;
+                            case 6:
+                                $digits = $digits + 5;
+                                break;
+                            case 7:
+                                $digits = $digits + 0;
+                                break;
+                            case 8:
+                                $digits = $digits + 3;
+                                break;
+                            case 9:
+                                $digits = $digits + 6;
+                                break;
+                            case 10:
+                                $digits = $digits + 1;
+                                break;
+                            case 11:
+                                $digits = $digits + 4;
+                                break;
+                            case 12:
+                                $digits = $digits + 4;
+                                break;
+                        }
+                        // THIS HARDCODED VALUE WILL CHANGE IN THE YEAR January 1st, 2100
+                        // What to change to: For a Gregorian date, add 0 for 1900's, 6
+                        // for 2000's, 4 for 1700's, 2 for 1800's; for other years, add or
+                        // subtract multiples of 400.
+                        if ($year >= 2100) {
+                            echo "ENTER SCHEDULER.PHP AND GO TO LINE NUMBER 233. NUMERICAL CALCULATION ERROR HAS OCCURRED. REFERENCE COMMENTS ON LINE NUMBERS 226-229";
+                        }
+                        $digits = $digits + 6; //Do not change line number without changing echo statement above
+
+                        $digits = $digits + $last;
+
+                        $day = $digits % 7;
+
+
+                        // Sunday = 1, etc.
+
+
+                    ?>
+                    <script type="text/javascript">
+                        // php_VARNAME grabs from PHP above this script
+                        var php_date = "<?php echo $day; ?>";
+                        var php_month = "<?php echo $month; ?>";
+                        var php_isLeap = "<?php echo $isLeap; ?>";
+                        var monthOver = 0;
+                        var monthDates = 0;
+                        // i runs through the element IDs of the month table
+                        for (var i = 1; i < 43; i++) {
+                            var name = i.toString();
+                            // days prior to the start of the month
+                            if (i < php_date) {
+                                document.getElementById(name).innerHTML = "PREVIOUS MONTH";
+                            }
+                            // month starting
+                            else {
+                                monthDates += 1;
+                                if (php_month == 1 || php_month == 3 || php_month == 5 || php_month == 7 || php_month == 8 || php_month == 10 || php_month == 12) {
+                                    if (monthDates <= 31) {
+                                        var day = monthDates.toString();
+                                        document.getElementById(name).innerHTML = day;
+                                    }
+                                    else {
+                                        document.getElementById(name).innerHTML = " ";
+                                    }
+                                }
+                                else if (php_month == 4 || php_month == 6 || php_month == 9 || php_month == 11) {
+                                    if (monthDates <= 30) {
+                                        var day = monthDates.toString();
+                                        document.getElementById(name).innerHTML = day;
+                                    }
+                                    else {
+                                        document.getElementById(name).innerHTML = "              ";
+                                    }
+                                }
+                                else if (php_month == 2) {
+                                    if (php_isLeap == 1) {
+                                        if (monthDates <= 29) {
+                                            var day = monthDates.toString();
+                                            document.getElementById(name).innerHTML = day;
+                                        }
+                                        else {
+                                            document.getElementById(name).innerHTML = "              ";
+                                        }
+                                    }
+                                    else {
+                                        if (monthDates <= 28) {
+                                            var day = monthDates.toString();
+                                            document.getElementById(name).innerHTML = day;
+                                        }
+                                        else {
+                                            document.getElementById(name).innerHTML = "              ";
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    </script>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-                    <?php
-                        $link = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
-                        if (!$link) {
-                            die("Connection failed: " . $mysqli->error());
-                        }
-                        /**$users init to size of shifts change 42 **/
-                        $users = new SplFixedArray(42);
-                        $priorities= new SplFixedArray(42);
-                        $usersNames = new SplFixedArray(42);
-
-                        $SHIFTS_PER_DAY = 5;
-                        $DAYS = 31;
-
-
-
-                        class User {
-                            private $id;
-                            private $userID;
-                            private $shiftID;
-                            private $priority;
-                            private $scheduled;
-                            private $last_name;
-                            private $first_name;
-                            private $named;
-
-                        public function __construct($userID, $shiftID, $priority)  {
-                            $this->userID = $userID;
-                            $this->shiftID = $shiftID;
-                            $this->priority = $priority;
-                            $this->scheduled = false;
-                            $this->named = false;
-
-                        }
-                            public function set_name($first, $last){
-                                $this->first_name = $first;
-                                $this->last_name = $last;
-                            }
-                            public function get_id(){
-                                return $this->id;
-                            }
-                            public function get_shiftID(){
-                                return $this->shiftID;
-                            }
-                            public function get_priority(){
-                                return $this->priority;
-                            }
-                            public function schedule(){
-                                $scheduled = true;
-                            }
-                            public function isScheduled(){
-                                return $this->scheduled;
-                            }
-                            public function named(){
-                                $this->named = true;
-                            }
-
-
-
-                            public function get_last_name(){
-                                return $this->last_name;
-                            }
-
-                            public function get_fist_name(){
-                                return $this->first_name;
-                            }
-                            public function get_userID(){
-                                return $this->userID;
-                            }
-                            public function get_name(){
-                                return "$this->last_name".", "."$this->first_name";
-                            }
-
-
-                        }
-
-                        function new_user($id, $shiftID, $priority){
-                            return new User($id, $shiftID, $priority);
-                        }
-
-                        $TRAINER = 2;
-                        $TRAINEE = 0;
-
-
-                        $users_High = new SplQueue();
-                        $users_Med = new SplQueue();
-                        $users_Low = new SplQueue();
-                        $users_Trainee = new SplQueue();
-                        $users_Trainer = new SplQueue();
-
-
-                    $weekDays = array("Monday", "Tuesday", "Wednesday" , "Thursday" , "Friday" , "Saturday" , "Sunday");
-
-                        // Open a MySQL connection
-
-                        $sql = "SELECT * FROM SHIFTS ";
-
-                        if($stmt = $link->prepare($sql)){
-                            $stmt->execute();
-                            $stmt->bind_result($id, $userID, $shiftID , $priority, $skill_level);
-
-
-
-
-
-                        /*
-                         * Parses the SHIFTS database and sorts into 5 queues
-                         * Trainer, Trainee, Low, Med, High
-                         */
-
-                        while($stmt->fetch()) {
-
-
-                            if($skill_level == $TRAINER) {
-
-                                $users_Trainer->enqueue(new_user($userID, $shiftID, $priority));
-                            }
-                            if($skill_level == $TRAINEE){
-                                $users_Trainee->enqueue(new_user($userID, $shiftID, $priority));
-
-                            }
-
-                            switch($priority) {
-
-                                case 1:
-                                    $users_Low->enqueue(new_user($userID, $shiftID, $priority));
-                                    break;
-
-                                case 2:
-                                    $users_Med->enqueue(new_user($userID, $shiftID, $priority));
-                                    break;
-
-                                case 3:
-                                    $users_High->enqueue(new_user($userID, $shiftID, $priority));
-                                    break;
-
-                            }
-
-                        }
-                        $stmt->close();
-
-                            $array = array();
-
-                            $kTrainees = $users_Trainee->count();
-                          //  printf("%d\n", $kTrainees);
-                           for ($j = 0; $j < $kTrainees; $j++) {
-                                    $trainee = $users_Trainee->dequeue();
-                                    array_push($array, $trainee->get_userID());
-                                    $users_Trainee->enqueue($trainee);
-                                    //printf("%d\n",$array[$j]);
-
-                           }
-
-                        /*
-                         * Lets play the name game....
-                         */
-                            //Trainiee name assigner
-
-                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
-                            if($stmt = $link->prepare($sql)){
-
-
-
-                           //     printf("%d\n", $kTrainees);
-                                for ($i = 0; $i < $kTrainees; $i++) {
-                                    $stmt->bind_param('i', $array[$i]);
-                                    $stmt->execute();
-                                    $stmt->bind_result($first, $last);
-                                    $stmt->fetch();
-                                    $trainee = $users_Trainee->dequeue();
-                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
-
-                                    if($trainee->named())
-                                        $users_Trainee->enqueue($trainee);
-                                    else {
-                                        $trainee->set_name($first, $last);
-                                        $users_Trainee->enqueue($trainee);
-                                        }
-
-                                }
-                                $stmt->close();
-                            }
-
-
-
-
-                            //TRIANERR!!!!!!!!!!!!!!!
-
-
-                            $array = array();
-
-                            $kTrainers = $users_Trainer->count();
-                           // printf("%d\n", $kTrainers);
-                            for ($j = 0; $j < $kTrainers; $j++) {
-                                $trainer = $users_Trainer->dequeue();
-                                array_push($array, $trainer->get_userID());
-                                $users_Trainer->enqueue($trainer);
-                                //printf("%d\n",$array[$j]);
-
-                            }
-
-
-
-
-
-
-
-                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
-                            if($stmt = $link->prepare($sql)){
-
-
-
-                             //   printf("%d\n", $kTrainers);
-                                for ($i = 0; $i < $kTrainers; $i++) {
-                                    $stmt->bind_param('i', $array[$i]);
-                                    $stmt->execute();
-                                    $stmt->bind_result($first, $last);
-                                    $stmt->fetch();
-                                    $trainer = $users_Trainer->dequeue();
-                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
-
-                                    if($trainer->named())
-                                        $users_Trainer->enqueue($trainer);
-                                    else {
-                                        $trainer->set_name($first, $last);
-                                        $users_Trainer->enqueue($trainer);
-                                    }
-
-                                }
-                                $stmt->close();
-                            }
-
-                            //LOW PRIOR USERS!!!!!!!!!!!!!!!!
-                            $array = array();
-
-                            $kLow = $users_Low->count();
-                           // printf("%d\n", $kLow);
-                            for ($j = 0; $j < $kLow; $j++) {
-                                $trainee = $users_Low->dequeue();
-                                array_push($array, $trainee->get_userID());
-                                $users_Low->enqueue($trainee);
-                                //printf("%d\n",$array[$j]);
-
-                            }
-
-
-
-
-
-                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
-                            if($stmt = $link->prepare($sql)){
-
-
-
-                                //printf("%d\n", $kLow);
-                                for ($i = 0; $i < $kLow; $i++) {
-                                    $stmt->bind_param('i', $array[$i]);
-                                    $stmt->execute();
-                                    $stmt->bind_result($first, $last);
-                                    $stmt->fetch();
-                                    $trainee = $users_Low->dequeue();
-                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
-
-                                    if($trainee->named())
-                                        $users_Low->enqueue($trainee);
-                                    else {
-                                        $trainee->set_name($first, $last);
-                                        $users_Low->enqueue($trainee);
-                                    }
-
-                                }
-                                $stmt->close();
-                            }
-
-
-                            $array = array();
-
-                            $kMed = $users_Med->count();
-                            //printf("%d\n", $kMed);
-                            for ($j = 0; $j < $kMed; $j++) {
-                                $trainee = $users_Med->dequeue();
-                                array_push($array, $trainee->get_userID());
-                                $users_Med->enqueue($trainee);
-                                //printf("%d\n",$array[$j]);
-
-                            }
-
-                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
-                            if($stmt = $link->prepare($sql)){
-
-
-
-                             //   printf("%d\n", $kMed);
-                                for ($i = 0; $i < $kMed; $i++) {
-                                    $stmt->bind_param('i', $array[$i]);
-                                    $stmt->execute();
-                                    $stmt->bind_result($first, $last);
-                                    $stmt->fetch();
-                                    $trainee = $users_Med->dequeue();
-                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
-
-                                    if($trainee->named())
-                                        $users_Med->enqueue($trainee);
-                                    else {
-                                        $trainee->set_name($first, $last);
-                                        $users_Med->enqueue($trainee);
-                                    }
-
-                                }
-                                $stmt->close();
-                            }
-
-
-                            $array = array();
-
-                            $kHigh = $users_High->count();
-                          //  printf("%d\n", $kHigh);
-                            for ($j = 0; $j < $kHigh; $j++) {
-                                $trainee = $users_High->dequeue();
-                                array_push($array, $trainee->get_userID());
-                                $users_High->enqueue($trainee);
-                                //printf("%d\n",$array[$j]);
-
-                            }
-
-                            $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=?";
-                            if($stmt = $link->prepare($sql)){
-
-
-
-                           //     printf("%d\n", $kHigh);
-                                for ($i = 0; $i < $kHigh; $i++) {
-                                    $stmt->bind_param('i', $array[$i]);
-                                    $stmt->execute();
-                                    $stmt->bind_result($first, $last);
-                                    $stmt->fetch();
-                                    $trainee = $users_High->dequeue();
-                                    //printf(nl2br("volunteer: %s %s\n"), $first, $last);
-
-                                    if($trainee->named())
-                                        $users_High->enqueue($trainee);
-                                    else {
-                                        $trainee->set_name($first, $last);
-                                        $users_High->enqueue($trainee);
-                                    }
-
-                                }
-                                $stmt->close();
-                            }
-
-
-
-
-
-
-
-                            /*
-                             * Method to first find trainer-trainee pairs and schedule them together.
-                             *
-                             */
-
-
-                            $nTrainers = $users_Trainer->count();
-                            $kTrainees = $users_Trainee->count();
-                            $FIFO_Trainee;
-                            $check = false;
-
-
-
-
-                            for ($i = 0; $i < $nTrainers; $i++) {
-                                $trainer = $users_Trainer->dequeue();
-
-                                for ($j = 0; $j < $kTrainees; $j++) {
-                                      $trainee = $users_Trainee->dequeue();
-                                    if($trainer->get_shiftID() == $trainee->get_shiftID() && $trainee->isScheduled() == false) {
-                                        if(!$check){
-                                            $check = true;
-                                            $FIFO_Trainee = $trainee;
-                                        }
-                                        else if($FIFO_Trainee->get_priority() < $trainee->get_priority()){
-                                            $FIFO_Trainee = $trainee;
-                                        }
-
-                                    }
-                                    $users_Trainee->enqueue($trainee);
-                                }
-                                $usersNames[$trainer->get_shiftID()] = nl2br($trainer->get_name()." & \n".$FIFO_Trainee->get_name());
-                                $trainer->schedule();
-                                $FIFO_Trainee->schedule();
-                            }
-
-
-
-                                //echo $usersNames[0]->get_userID();
-
-
-
-                        /* Convert userID -> Last, First
-                        for($i = 0; $i < 3; $i++) {
-                                $ids = $users_High->dequeue();
-                                $hold = "SELECT UserID, ShiftID FROM SHIFTS WHERE PRIMARY_ID=$ids";
-                                if($stmt = $link->prepare($hold)){
-                                $stmt->execute();
-                                $stmt->bind_result($user_ID, $shift_ID);
-                                $stmt->fetch();
-                            }
-                                $sql = "SELECT FIRST,LAST FROM USERS WHERE PRIMARY_ID=$user_ID";
-
-                            $stmt->close();
-                                if($stmt = $link->prepare($sql)) {
-                                    $stmt->execute();
-                                    $stmt->bind_result($first, $last);
-                                $stmt->fetch();
-                                    echo $last;
-                                    $usersNames[$shift_ID] = $last.", ".$first;
-
-                                $stmt->close();
-
-                            }
-                        }
-                            */
-
-                        for ($i = 0; $i < 7; $i++) {
-                            echo "<tr><td>$weekDays[$i]</td>";
-                                for ($j = 0; $j < 6; $j++) {
-                                    $idx = ($i * 6) + $j;
-                                    echo "<td><p>$usersNames[$idx]</p></td>";
-                                }
-                                echo"</tr>";
-                            }
-                        }
-
-                    ?>
 
                     </tbody>
                 </table>
@@ -618,10 +330,26 @@
             <a href="addShift.html" class="btn btn-success">Add new Shifts</a>
             <a href="editShift.html" class="btn btn-warning">Edit Shifts</a>
             <a href="removeShift.html" class="btn btn-danger">Remove Shifts</a>
+            <button onclick="schedule()" >Schedule</button>
+            <button onclick="finalize()">Finalize</button>
+            <script>
+                function schedule() {
+                    $.get("schedule_algorithm.php");
+                    return false;
+                }
+            </script>
+            <script>
+                function finalize() {
+                    $.get("FutureToCurrent.php");
+                    return false;
+                }
+            </script>
+
+
         </p>
 
 
-        <div style="margin-bottom: 15px;">
+        <!--<div style="margin-bottom: 15px;">
             <div class="btn-toolbar bs-component" style="margin: 0;">
                 <div class="btn-group">
                     <a href="#" class="btn btn-info">Info</a>
@@ -634,7 +362,7 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>
 
@@ -651,190 +379,20 @@
     </div>
 </div>
 
-    <div class="modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Name</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="hour1">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h1">12-1</tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="hour2">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h2">1-2</tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="hour3">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h3">2-3</tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="hour4">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h4">3-4</tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="hour5">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h5">4-5</tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="hour6">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h6">5-6</tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="hour7">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h7">6-7</tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="hour8">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h8">7-8</tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="hour9">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h9">8-9</tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="hour10">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h10">9-10</tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="hour11">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h11">10-11</tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="hour12">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h12">11-12</tr>
-                            </thead>
-                        </table>
-                    </div>
-                    <div class="hour13">
-                        <table id="hours", border="1">
-                            <thead>
-                            <tr id="h1">12-1</tr>
-                            </thead>
-                        </table>
+<div class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="ajaxLoader">
 
-                        <div class="hour14">
-                            <table id="hours", border="1">
-                                <thead>
-                                <tr id="h2">1-2</tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="hour15">
-                            <table id="hours", border="1">
-                                <thead>
-                                <tr id="h3">2-3</tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="hour16">
-                            <table id="hours", border="1">
-                                <thead>
-                                <tr id="h4">3-4</tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="hour17">
-                            <table id="hours", border="1">
-                                <thead>
-                                <tr id="h5">4-5</tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="hour18">
-                            <table id="hours", border="1">
-                                <thead>
-                                <tr id="h6">5-6</tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="hour19">
-                            <table id="hours", border="1">
-                                <thead>
-                                <tr id="h7">6-7</tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="hour20">
-                            <table id="hours", border="1">
-                                <thead>
-                                <tr id="h8">7-8</tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="hour21">
-                            <table id="hours", border="1">
-                                <thead>
-                                <tr id="h9">8-9</tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="hour22">
-                            <table id="hours", border="1">
-                                <thead>
-                                <tr id="h10">9-10</tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="hour23">
-                            <table id="hours", border="1">
-                                <thead>
-                                <tr id="h11">10-11</tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="hour24">
-                            <table id="hours", border="1">
-                                <thead>
-                                <tr id="h12">11-12</tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
+
 
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
         </div>
+    </div>
+</div>
 
 <footer>
     <div class="row">
@@ -853,12 +411,30 @@
 
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script>
+
+
     $(document).ready(function(){
+
         $('td').click(
             function() {
                 var $p = $(this).text();
-                $('.modal').show();
-                $('.modal-title').text($p);
+                if ($(this).text() != "PREVIOUS MONTH") {
+                    $('.modal').show();
+                    var php_date = "<?php $currentDay = date("j"); echo $currentDay; ?>";
+                    var php_month = "<?php echo date("M"); ?>";
+                    var php_year = "<?php echo $year; ?>";
+                    var current = php_month + " " + $p + ", " + php_year;
+                    $('.modal-title').text(current);
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                            document.getElementById("ajaxLoader").innerHTML = xmlhttp.responseText;
+                        }
+                    }
+                    xmlhttp.open("GET", "loadModal.php?sid=" + $p, true);
+                    xmlhttp.send();
+                }
+
             }
         );
         $('button').click(
@@ -866,7 +442,6 @@
                 $('.modal').hide();
             });
     });
-
 </script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/bootswatch.js"></script>
