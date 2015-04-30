@@ -5312,6 +5312,28 @@ button.close {
   overflow: scroll;
   outline: 0;
 }
+
+.work1 {
+  height: 40px;
+  width: 135px;
+  display: inline-block;
+}
+
+#work12{
+  background-color: maroon;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  padding-left: 4%;
+  padding-bottom: 7%;
+  border-radius: 10px;
+  width: 120px;
+  height: 30px;
+  color: #ffffff;
+  border: grey solid;
+}
+#work12.hover {
+  color: #808080;
+}
+
 .modal.fade .modal-dialog {
   -webkit-transform: translate3d(0, -25%, 0);
   transform: translate3d(0, -25%, 0);
@@ -6425,4 +6447,7 @@ label,
 }
 .modal .close {
   color: #222222;
+}
+.bullshit {
+   display: inline-block;
 }
