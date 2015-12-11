@@ -1,0 +1,107 @@
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Lafayette Crisis Center time table</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./bootstrap.css" media="screen">
+    <link rel="stylesheet" href="./bootswatch.min.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="../bower_components/html5shiv/dist/html5shiv.js"></script>
+    <script src="../bower_components/respond/dest/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="http://www.lafayettecrisiscenter.org" class="navbar-brand">LCC</a>
+            <!--<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>-->
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="help.html">Help</a>
+                </li>
+                <li>
+                    <a href="archive.html" id="archive">View Archived Data</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+<!-- current schedual>
+================================================== -->
+<div>
+    <h1>Past Schedules</h1>
+    <table>
+        <tr>
+            <td><a style="font-size:200%;"><href=""><span id="pm1">PMonth</span></a></td>
+        </tr>
+        <tr>
+            <td><a style="font-size:200%;"><href=""><span id="pm2">PMonth</span></a></td>
+        </tr>
+        <tr>
+            <td><a style="font-size:200%;"><href=""><span id="pm3">PMonth</span></a></td>
+        </tr>
+        <tr>
+            <td><a style="font-size:200%;"><href=""><span id="pm4">PMonth</span></a></td>
+        </tr>
+        <tr>
+            <td><a style="font-size:200%;"><href=""><span id="pm5">PMonth</span></a></td>
+        </tr>
+    </table>
+</div>
+<footer>
+    <div class="row">
+        <div class="col-lg-12">
+
+            <p>Made by <a href="http://epics.ecn.purdue.edu/disc/" rel="nofollow">EPICS-DISC </a>. Contact us at <a href="mailto:epics-disc@ecn.purdue.edu">epics-disc@ecn.purdue.edu</a>.</p>
+
+        </div>
+    </div>
+</footer>
+
+<script type="text/javascript">
+    var my_month=new Date();
+    var month_name=new Array(12);
+    month_name[0]="January";
+    month_name[1]="February";
+    month_name[2]="March";
+    month_name[3]="April";
+    month_name[4]="May";
+    month_name[5]="June";
+    month_name[6]="July";
+    month_name[7]="August";
+    month_name[8]="September";
+    month_name[9]="October";
+    month_name[10]="November";
+    month_name[11]="December";
+
+    document.getElementById("pm1").innerHTML = month_name[my_month.getMonth()-1];
+    document.getElementById("pm2").innerHTML = month_name[my_month.getMonth()-2];
+    document.getElementById("pm3").innerHTML = month_name[my_month.getMonth()-3];
+    document.getElementById("pm4").innerHTML = month_name[my_month.getMonth()-4];
+    document.getElementById("pm5").innerHTML = month_name[my_month.getMonth()-5];
+
+    /*var p = new Array(my_month.getMonth()-1,my_month.getMonth()-2,my_month.getMonth()-3,my_month.getMonth()-4,my_month.getMonth()-5);
+
+    for (i = 0; i < p.length; i++) { 
+        if(p[i] < 0)
+            p[i]+= 12;
+    } */  
+
+</script>
+
+<script src="./js/bootstrap.min.js"></script>
+<script src="./js/bootswatch.js"></script>
+</body>
+</html>

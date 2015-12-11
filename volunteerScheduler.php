@@ -702,7 +702,8 @@
 
 
 
-            /* Convert userID -> Last, First
+            //Convert userID -> Last, First
+            /*
             for($i = 0; $i < 3; $i++) {
                     $ids = $users_High->dequeue();
                     $hold = "SELECT UserID, ShiftID FROM SHIFTS WHERE PRIMARY_ID=$ids";
@@ -725,16 +726,31 @@
 
                 }
             }
-                */
-
+            */
+            
+            //Vincent comment
+            /*
+            //$schedule = "SELECT * FROM schedule";
+            $done = mysql_query("SELECT FIRST + ' ' + LAST FROM 'schedule' WHERE 'day' = $i");
+            //days
+            for ($i=1;$i <= 3;$i++) {
+                for ($j=1;$j<=5;$j++) {
+                    //if(is_null(mysql_fetch_array($done["ShiftID"])))
+                    //    echo "No scheduled volunteer";
+                    //else
+                        echo mysql_fetch_array($done)[$i];;
+                }
+            }
+            *//*
             for ($i = 0; $i < 7; $i++) {
-                //echo "<tr><td>$weekDays[$i]</td>";
+                echo "<tr><td>$weekDays[$i]</td>";
                 for ($j = 0; $j < 6; $j++) {
                     $idx = ($i * 6) + $j;
-                    // echo "<td><p>$usersNames[$idx]</p></td>";
+                     echo "<td><p>$usersNames[$j]</p></td>";
                 }
-                //echo"</tr>";
-            }
+                echo"</tr>";
+            }*/
+             
         }
 
         ?>
@@ -753,9 +769,7 @@
     <div class="col-lg-6">
 
         <p class="bs-component">
-            <a href="addShift.html" class="btn btn-success">Add new Shifts</a>
-            <a href="editShift.html" class="btn btn-warning">Edit Shifts</a>
-            <a href="removeShift.html" class="btn btn-danger">Remove Shifts</a>
+            <a href="scheduler.php" class="btn btn-default">Weekly Scheduler</a>
         </p>
 
 
@@ -802,31 +816,9 @@
                         <h2>February 28, 2015</h2>
                         <tr id="h1"><h4>12 AM - 8 AM</h4></tr>
                         <hr>
-                        <p>Instructor: John Jacob</p>
+                        <p>Instructor: BROKEN </p>
                         <p>Trainee: James Williams</p>
                         <br>
-
-                        <script type="text/javascript">
-                            var month_name[12] = new Array(12);
-                            month_name[0]="January";
-                            month_name[1]="February";
-                            month_name[2]="March";
-                            month_name[3]="April";
-                            month_name[4]="May";
-                            month_name[5]="June";
-                            month_name[6]="July";
-                            month_name[7]="August";
-                            month_name[8]="September";
-                            month_name[9]="October";
-                            month_name[10]="November";
-                            month_name[11]="December";
-                            var php_date = "<?php $currentDay = date("j"); echo $currentDay; ?>";
-                            var php_month = "<?php echo $month; ?>";
-                            var php_year = "<?php echo $year; ?>";
-                            var inner = "<h1>" + month_name[php_month] + php_date.toString() + "," + php_year.toString() + "</h1><tr id=\"h1\"><h4>12 AM - 8 AM</h4></tr><hr><p>Instructor: John Jacob</p><p>Trainee: James Williams</p><br>";
-                            alert(inner);
-                            document.getElementById("hours1").innerHTML = inner;
-                        </script>
                         </thead>
                     </table>
                 </div>

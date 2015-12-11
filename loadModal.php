@@ -175,7 +175,7 @@
                 var php_date = "<?php $currentDay = date("j"); echo $currentDay; ?>";
                 var php_month = "<?php echo $month; ?>";
                 var php_year = "<?php echo $year; ?>";
-                var inner = "<h1>" + month_name[php_month] + php_date.toString() + "," + php_year.toString() + "</h1><tr id=\"h1\"><h4>12 AM - 8 AM</h4></tr><hr><p>Instructor: John Jacob</p><p>Trainee: James Williams</p><br>";
+                var inner = "<h1>" + month_name[php_month] + php_date.toString() + "," + php_year.toString() + "</h1><tr id=\"h1\"><h4>12 AM - 8 AM</h4></tr><hr><p>Instructor: John Jacob</p><p>Trainee: Vincent Lagahid</p><br>";
                 alert(inner);
                 document.getElementById("hours1").innerHTML = inner;
             </script>
