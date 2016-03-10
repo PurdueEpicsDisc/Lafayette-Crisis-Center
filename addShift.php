@@ -6,7 +6,7 @@
  * Time: 11:16 AM
  * Adding shifts.
  */
-$link = new mysqli("128.46.116.11","LCCenter","LCC.team4","lcc");
+$link = new mysqli("128.46.116.11","disclcc","C0mpact_DISC","lcc");
 if(!$link)
 {
     die("Connection failed: " . $link->error());

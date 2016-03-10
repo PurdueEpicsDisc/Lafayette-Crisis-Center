@@ -7,32 +7,22 @@
     }
 
     function week($week){
-        $link = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
+        $link = new mysqli("128.46.154.164", "disclcc", "C0mpact_DISC", "lcc");
 
         if (!$link) {
             die("Connection failed: " . $mysqli->error());
         }
         $week = $week;
-        $large = 5;
-        /*
+        echo "hello"
+        //Get Max Shift Id from Schedule Key
         $sql = "SELECT MAX(SHIFT_ID) AS max FROM SCHEDULE_KEY";
         $stmt = $link->prepare($sql);  //get max shift id int
         $stmt->execute();
-        $stmt->bind_result("$result")
+        $stmt->bind_result($result);
+        $stmt->store_result();
         $stmt->fetch();
-        //$row = mysql_fetch_array($result);
-        //$large = $SHIFTS["max"]; 
-        echo $result['max'];
-        //echo $SHIFTS;
-
-        echo "hellos";
-        */
-
-/*$sql    = 'SELECT foo FROM bar WHERE id = 42';
-$result = mysql_query("SELECT MAX(PAGE) AS max_page FROM test");
-$row = mysql_fetch_array($result);
-echo $row["max_page"];
-}*/
+        $large = $result;
+        $stmt->close();
 
         $usersNames = new SplFixedArray(7);//rows of 7 aka days
         //intialize shift_count to equal # of shifts at a given index
@@ -40,10 +30,9 @@ echo $row["max_page"];
 
         $weekDays = array("Monday", "Tuesday", "Wednesday" , "Thursday" , "Friday" , "Saturday" , "Sunday");
         // Open a MySQL connection
-        
+        //WARNING: DOESN'T ACCOUNT FOR MULTIPLE VOLUNTEERS AT THE SAME SHIFT
         $sql = "SELECT FIRST,LAST FROM schedule WHERE day=? AND ShiftID=?";
             if($stmt = $link->prepare($sql)){
-                echo "hea";
                 $day = $week * 7 - 6;
                 $end = 7 * $week;
                 $row = 0;

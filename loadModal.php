@@ -8,7 +8,7 @@
             <?php
 
             // Create connection
-            $conn = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
+            $conn = new mysqli("128.46.154.164", "disclcc", "C0mpact_DISC", "lcc");
             // Check connection
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
@@ -39,7 +39,7 @@
             <?php
 
             // Create connection
-            $conn = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
+            $conn = new mysqli("128.46.154.164", "disclcc", "C0mpact_DISC", "lcc");
             // Check connection
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
@@ -70,7 +70,7 @@
             <?php
 
             // Create connection
-            $conn = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
+            $conn = new mysqli("128.46.154.164", "disclcc", "C0mpact_DISC", "lcc");
             // Check connection
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);
@@ -101,7 +101,7 @@
             <?php
 
             // Create connection
-            $conn = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
+            $conn = new mysqli("128.46.154.164", "disclcc", "C0mpact_DISC", "lcc");
             // Check connection
             if ($conn->connect_error) {
                 die("Connection failed: " . $conn->connect_error);

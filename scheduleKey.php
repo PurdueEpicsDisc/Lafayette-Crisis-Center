@@ -36,7 +36,7 @@
           </ul>
       </div>
   </div>
-<p>HELP</p>
+<p>Schedule Key</p>
 <footer>
     <div class="row">
         <div class="col-lg-12">

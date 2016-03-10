@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <title>Lafayette Crisis Center time table</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./bootstrap.css" media="screen">
-    <link rel="stylesheet" href="./bootswatch.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -14,29 +13,30 @@
     <![endif]-->
 
 </head>
-<body>
-<div class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+  <body>
+  <div class="navbar navbar-default">
+      <div class="dropdown">
         <div class="navbar-header">
-            <a href="http://www.lafayettecrisiscenter.org" class="navbar-brand">LCC</a>
-            <!--<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          <button class="navbar-toggle collapsed pull-left" type="button" data-toggle="dropdown" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="icon-bars-button">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
-            </button>-->
+            </span>
+          </button>
         </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="help.html">Help</a>
-                </li>
-                <li>
-                    <a href="archive.html" id="archive">View Archived Data</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+          <ul class="dropdown-menu" id="navbar-main">
+              <li><a href="help.html">Help</a></li>
+              <li><a href="archive.html" id="archive">View Archived Data</a></li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li><a href="http://www.lafayettecrisiscenter.org" class="navbar-brand">MHACC</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="Login.html" <span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+          </ul>
+      </div>
+  </div>
 
 
 <div class="container">
@@ -78,7 +78,7 @@
             <div class="bs-component">
                 <table class="table table-striped table-hover ">
                     <thead>
-                    <tr> <!-- Should dynamically pull from SCHEDULE_KEY, its static now -->
+                    <tr> <!-- Should dynamically pull from SCHEDULE_KEY (ie the shift times may change), it's not -->
                         <th style="font-size: 25px">Week <span id="week" style="font-size: 28px">1</span></th>
                         <th>12 am - 8 am</th>
                         <th>8 am - 12 pm</th>
@@ -89,6 +89,73 @@
                     </tr>
                     </thead>
                     <tbody>
+                        <?php 
+                            echo "hello";  
+                            if (isset($_POST['p'])) {
+                                $week = $_POST['p'];
+                                week($week);
+                            }
+                            function week($week){
+                                $link = new mysqli("128.46.154.164", "disclcc", "C0mpact_DISC", "lcc");
+                            echo "hello";  
+
+                                if (!$link) {
+                                                                echo "hello";  
+                                    die("Connection failed: " . $mysqli->error());
+                                }
+                                $week = $week;
+                                echo "hello";
+                                //Get Max Shift Id from Schedule Key
+                                $sql = "SELECT MAX(SHIFT_ID) AS max FROM SCHEDULE_KEY";
+                                $stmt = $link->prepare($sql);  //get max shift id int
+                                $stmt->execute();
+                                $stmt->bind_result($result);
+                                $stmt->store_result();
+                                $stmt->fetch();
+                                $large = $result;
+                                $stmt->close();
+
+                                $usersNames = new SplFixedArray(7);//rows of 7 aka days
+                                //intialize shift_count to equal # of shifts at a given index
+                                // where the index is the shift id
+
+                                $weekDays = array("Monday", "Tuesday", "Wednesday" , "Thursday" , "Friday" , "Saturday" , "Sunday");
+                                // Open a MySQL connection
+                                //WARNING: DOESN'T ACCOUNT FOR MULTIPLE VOLUNTEERS AT THE SAME SHIFT
+                                $sql = "SELECT FIRST,LAST FROM schedule WHERE day=? AND ShiftID=?";
+                                    if($stmt = $link->prepare($sql)){
+                                        $day = $week * 7 - 6;
+                                        $end = 7 * $week;
+                                        $row = 0;
+                                        for ($i = $day; $i <= $end; $i++) {
+                                            $usersNames[$row] = new SplFixedArray($large);
+                                            for($j = 0; $j < $large; $j++) {
+                                                $stmt->bind_param('ii',$i,$j);
+                                                $stmt->execute();
+                                                $stmt->bind_result($first, $last);
+                                                if($stmt->fetch()) {
+                                                    $usersNames[$row][$j] = $first." ".$last;
+                                                }
+                                                else {
+                                                    $usersNames[$row][$j] = 'N/A';
+                                                }
+                                            }
+                                            $row++;
+                                        }
+                                        $stmt->close();
+                                    }
+
+                                //Echo out weekly schedule for scheduler.php    
+                                for ($i = 0; $i < 7; $i++) {
+                                    echo "<tr><td>$weekDays[$i]</td>";
+                                    for ($j = 0; $j < 5; $j++) {
+                                        echo "<td><p>".$usersNames[$i][$j]."</p></td>";
+                                    }
+                                    echo"</tr>";
+                                }
+                                
+                            } 
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -98,8 +165,6 @@
 
 <!-- Navs
  ================================================== -->
-
-
 
 
 <div class="row">
@@ -161,7 +226,7 @@
 <footer>
     <div class="row">
         <div class="col-lg-12">
-
+            <p>The php file used here doesn't dynamically match day with day of the week (ie 23rd of June is Monday)</p>
             <p>Made by <a href="http://epics.ecn.purdue.edu/disc/" rel="nofollow">EPICS-DISC </a>. Contact us at <a href="mailto:epics-disc@ecn.purdue.edu">epics-disc@ecn.purdue.edu</a>.</p>
 
         </div>
@@ -172,7 +237,6 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script>
     $(document).ready(function(){
         $('td').click(
@@ -200,7 +264,6 @@ $(function () {
   loadWeek (1);
 });
 </script>
-<script src="./js/bootstrap.min.js"></script>
-<script src="./js/bootswatch.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>
 </html>

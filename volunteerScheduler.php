@@ -4,8 +4,7 @@
     <meta charset="utf-8">
     <title>Lafayette Crisis Center time table</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="./bootstrap.css" media="screen">
-    <link rel="stylesheet" href="./bootswatch.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="../bower_components/html5shiv/dist/html5shiv.js"></script>
@@ -13,29 +12,30 @@
     <![endif]-->
 
 </head>
-<body>
-<div class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
+  <body>
+  <div class="navbar navbar-default">
+      <div class="dropdown">
         <div class="navbar-header">
-            <a href="http://www.lafayettecrisiscenter.org" class="navbar-brand">LCC</a>
-            <!--<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          <button class="navbar-toggle collapsed pull-left" type="button" data-toggle="dropdown" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="icon-bars-button">
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
-            </button>-->
+            </span>
+          </button>
         </div>
-        <div class="navbar-collapse collapse" id="navbar-main">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="../help/">Help</a>
-                </li>
-                <li>
-                    <a href="" id="archive">View Archived Data</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+          <ul class="dropdown-menu" id="navbar-main">
+              <li><a href="help.html">Help</a></li>
+              <li><a href="archive.html" id="archive">View Archived Data</a></li>
+          </ul>
+          <ul class="nav navbar-nav">
+            <li><a href="http://www.lafayettecrisiscenter.org" class="navbar-brand">MHACC</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="Login.html" <span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+          </ul>
+      </div>
+  </div>
 
 
 <div class="container">
@@ -306,7 +306,7 @@
             </div>
         </div>
         <?php
-        $link = new mysqli("128.46.116.11", "LCCenter", "LCC.team4", "lcc");
+        $link = new mysqli("128.46.154.164", "disclcc", "C0mpact_DISC", "lcc");
         if (!$link) {
             die("Connection failed: " . $mysqli->error());
         }
@@ -767,9 +767,13 @@
 ================================================== -->
 <div class="container">
     <div class="col-lg-6">
-
+        <p>
+            These calendars are mockups. Of course both admin and volunteers must see a calendar relative to their function.
+        </p>
         <p class="bs-component">
+            <a href="index.html" class="btn btn-default">Return to Index</a>
             <a href="scheduler.php" class="btn btn-default">Weekly Scheduler</a>
+
         </p>
 
 
@@ -816,8 +820,8 @@
                         <h2>February 28, 2015</h2>
                         <tr id="h1"><h4>12 AM - 8 AM</h4></tr>
                         <hr>
-                        <p>Instructor: BROKEN </p>
-                        <p>Trainee: James Williams</p>
+                        <p>Instructor: BROKEN FOUND IN LINE 823</p>
+                        <p>Trainee: Of volunteerScheduler.php</p>
                         <br>
                         </thead>
                     </table>
@@ -901,7 +905,6 @@
     });
 
 </script>
-<script src="./js/bootstrap.min.js"></script>
-<script src="./js/bootswatch.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 </body>
 </html>
